@@ -4,6 +4,8 @@ import styles from "./styles.less";
 import {Modal, Upload} from "antd";
 import {getBase64} from "@/common/assect/util";
 import {fail} from "@/common/assect/message";
+import "antd/es/modal/style/css";
+import "antd/es/upload/style/css";
 
 const Image = (props: any): any => {
   const {fileList, max, title, onChange, disabled, imageSize} = props;
@@ -57,4 +59,5 @@ const Image = (props: any): any => {
   </div>;
 };
 
+// @ts-ignore
 export default memo(Image);

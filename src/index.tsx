@@ -5,9 +5,10 @@ import routers from "@/routers";
 import globalStore from "@/store";
 import {Provider} from "react-redux";
 import zhCN from "antd/lib/locale/zh_CN";
+import zhCNMobile from "antd-mobile/es/locales/zh-CN";
+import {ConfigProvider as ConfigProviderMobile} from "antd-mobile"
 import {ConfigProvider} from "antd";
-import "antd/dist/antd.css"
-// import "antd/dist/antd.css";
+import 'element-theme-default';
 
 
 const App = () => {
@@ -15,7 +16,9 @@ const App = () => {
     <React.Fragment>
       <Provider store={globalStore}>
         <ConfigProvider locale={zhCN}>
-          <CreateRouter routers={routers}/>
+          <ConfigProviderMobile locale={zhCNMobile}>
+            <CreateRouter routers={routers}/>
+          </ConfigProviderMobile>
         </ConfigProvider>
       </Provider>
     </React.Fragment>

@@ -3,7 +3,7 @@ import styles from "./styles.less";
 import {IReactComponent} from "@/definitions/type";
 import {connect} from "react-redux";
 import {changeHtmlFontSize} from "@/common/assect/styles";
-import {Input} from "antd";
+import {Input} from "element-react";
 
 
 const {mapState, mapDispatch} = require("@/store/pc/action").default;
