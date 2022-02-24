@@ -12,6 +12,9 @@ const action = {
       init() {
         dispatch({type: `${pc}/init`});
       },
+      setFileList(params: any){
+        dispatch({type: `${pc}/setFileList`, ...params});
+      }
     };
   }
 };
