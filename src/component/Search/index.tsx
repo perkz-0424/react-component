@@ -9,6 +9,7 @@ import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
 const {mapState, mapDispatch} = require("@/component/Search/store/action").default;
 
 interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapState> {
+  goTo: (path: string) => any
   className?: string,
   onFocus?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
   onBlur?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
@@ -46,13 +47,13 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
           {props.items.map((i: { name: string, enName: string }, key) => {
             return <div
               key={key} className={styles.item}
-              onClick={() => props.setSearch(i.name, [i]).then(() => props.setFocus(false))}>
+              onClick={() => props.setSearch(i.name, [i]).then(() => props.setFocus(false)).then(() => props.goTo(i.enName))}>
               <span className={styles.name}>{i.enName}：{i.name}</span>
               <span><SearchOutlined className={styles.icon}/></span>
             </div>;
           })}
         </div> : <div className={`${styles.loading} ${styles.other}`}>
-          未找到相关内容
+          {props.loading ? "" : "未找到相关内容"}
           <div className={styles.otherSearch}/>
         </div>}
         {props.loading ? <div className={styles.loading}><LoadingOutlined className={styles.loadingIcon}/></div> : null}

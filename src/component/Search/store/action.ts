@@ -21,7 +21,7 @@ const getItemsBySearch = (items: any[], s = "") => {
         tempItems = [...items];
       }
       return resolve(tempItems);
-    }, 500);
+    }, 300);
   });
 };
 const action = {

@@ -29,7 +29,10 @@ const Pc: IReactComponent<IProps> = (props) => {
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
         <div className={styles.search}>
-          <Search data={getSearchData()}/>
+          <Search
+            data={getSearchData()}
+            goTo={(path) => props.routerHistory.navigate(path)}
+          />
         </div>
         <div className={styles.body}>
           <div className={styles.tab}>
