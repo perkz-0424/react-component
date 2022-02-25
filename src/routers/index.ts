@@ -10,7 +10,6 @@ const routes = [
       {
         path: "/pc",
         Component: require("@/pages/Pc").default,
-        redirect: "image",
         name: "pc端",
         children: [
           {

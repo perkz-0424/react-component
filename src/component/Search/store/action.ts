@@ -48,12 +48,16 @@ const action = {
           await dispatch({type: `${search}/setItems`, items: i});
         }
       },
-      async setSearch(s: string) {
+      async setSearch(s: string, v: any[]) {
         await dispatch({type: `${search}/setSearch`, search: s});
-        await dispatch({type: `${search}/setLoading`, loading: true});
-        const i = await getItemsBySearch(params.data, s);
-        await dispatch({type: `${search}/setLoading`, loading: false});
-        await dispatch({type: `${search}/setItems`, items: i});
+        if (!v) {
+          await dispatch({type: `${search}/setLoading`, loading: true});
+          const i = await getItemsBySearch(params.data, s);
+          await dispatch({type: `${search}/setLoading`, loading: false});
+          await dispatch({type: `${search}/setItems`, items: i});
+        } else {
+          await dispatch({type: `${search}/setItems`, items: v});
+        }
       }
     };
   }

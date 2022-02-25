@@ -21,6 +21,7 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
   return <div
+    id="search_id"
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
   >
     <Input
@@ -33,27 +34,27 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
         await props.setItems(props.data, props.search);
         props.onFocus && props.onFocus(e);
       }}
-      onBlur={async (e) => {
-        await props.setFocus(false);
+      onBlur={(e) => {
         props.onBlur && props.onBlur(e);
       }}
       onChange={props.setSearch}
+      onIconClick={() => props.setSearch("", []).then(() => props.setFocus(false))}
     />
     <div className={styles.listContainer}>
       <div className={styles.list}>
-        {
-          props.items && props.items.length ? <div className={styles.items}>
-            {props.items && props.items.map((i: { name: string, enName: string }, key) => {
-              return <div key={key} className={styles.item} onClick={() => props.setSearch(i.name)}>
-                <span className={styles.name}>{i.enName}：{i.name}</span>
-                <span><SearchOutlined className={styles.icon}/></span>
-              </div>;
-            })}
-          </div> : <div className={`${styles.loading} ${styles.other}`}>
-            未找到相关内容
-            <div className={styles.otherSearch}/>
-          </div>
-        }
+        {props.items && props.items.length ? <div className={styles.items}>
+          {props.items.map((i: { name: string, enName: string }, key) => {
+            return <div
+              key={key} className={styles.item}
+              onClick={() => props.setSearch(i.name, [i]).then(() => props.setFocus(false))}>
+              <span className={styles.name}>{i.enName}：{i.name}</span>
+              <span><SearchOutlined className={styles.icon}/></span>
+            </div>;
+          })}
+        </div> : <div className={`${styles.loading} ${styles.other}`}>
+          未找到相关内容
+          <div className={styles.otherSearch}/>
+        </div>}
         {props.loading ? <div className={styles.loading}><LoadingOutlined className={styles.loadingIcon}/></div> : null}
       </div>
     </div>

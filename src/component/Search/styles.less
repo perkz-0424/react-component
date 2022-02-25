@@ -8,7 +8,7 @@
 
     & :global {
       .el-input__inner {
-        position: relative;
+        //position: relative;
         transition: @primary-transition;
         border-color: rgba(69, 79, 88, 0.2);
         background-color: rgba(255, 255, 255, 1);
@@ -42,7 +42,7 @@
     margin-top: -1px;
 
     .list {
-      height: 150px;
+      height: 200px;
       width: 100%;
       overflow-y: auto;
       position: relative;
@@ -125,9 +125,10 @@
   transition: @primary-transition;
 
   .listContainer {
-    max-height: 150px;
+    max-height: 200px;
     border: 1px solid rgba(69, 79, 88, 0.2);
     border-top: none;
+    box-sizing: border-box;
     transition: @primary-transition2;
     box-shadow: 0 0 0 0 rgb(0 0 0 / 4%), 0 2px 5px 0 rgb(0 0 0 / 12%);
   }
