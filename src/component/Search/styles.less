@@ -2,6 +2,7 @@
 
 .search {
   position: relative;
+
   .input {
     width: auto;
 
@@ -11,16 +12,18 @@
         transition: @primary-transition;
         border-color: rgba(69, 79, 88, 0.2);
         background-color: rgba(255, 255, 255, 1);
+        color: #43484c;
       }
 
       .el-input__icon {
         cursor: pointer;
-        &:before{
+
+        &:before {
           transition: @primary-transition;
         }
 
-        &:hover{
-          &:before{
+        &:hover {
+          &:before {
             color: #8193a3;
           }
         }
@@ -35,13 +38,83 @@
     z-index: 1;
     overflow: hidden;
     border-radius: 0 0 2px 2px;
-    background-color: rgba(255,255,255, 0.7);
-    margin-top: -2px;
+    background-color: rgba(255, 255, 255, 0.7);
+    margin-top: -1px;
 
     .list {
-      height: 200px;
+      height: 150px;
       width: 100%;
       overflow-y: auto;
+      position: relative;
+
+      .loading {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.7);
+
+        .loadingIcon {
+          font-size: 30px;
+          color: #678193;
+        }
+      }
+
+      .other {
+        color: #999999;
+        padding: 5px;
+        background-color: transparent;
+        font-size: 14px;
+
+        .otherSearch {
+          position: absolute;
+          bottom: 0;
+          color: #999999;
+          right: 0;
+        }
+      }
+
+      .items {
+        height: auto;
+        width: 100%;
+
+        .item {
+          width: 100%;
+          height: 60px;
+          cursor: pointer;
+          background-color: rgba(255, 255, 255, 0);
+          transition: @primary-transition;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 10px;
+          font-size: 14px;
+          color: #586774;
+          span{
+            white-space:nowrap;
+          }
+          .name{
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+          }
+          .icon{
+            font-size: 16px;
+          }
+
+          &:hover {
+            background-color: rgba(170, 178, 186, 0.6);
+            box-shadow: 0 1px 10px 1px #678193, 0 2px 5px 0 #678193;
+            color: #e8e8e8;
+          }
+        }
+      }
     }
   }
 }
@@ -52,18 +125,17 @@
   transition: @primary-transition;
 
   .listContainer {
-    max-height: 200px;
+    max-height: 150px;
     border: 1px solid rgba(69, 79, 88, 0.2);
     border-top: none;
     transition: @primary-transition2;
-    box-shadow: 0 0 2px 0 rgb(0 0 0 / 4%), 0 2px 5px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 0 0 0 rgb(0 0 0 / 4%), 0 2px 5px 0 rgb(0 0 0 / 12%);
   }
 
   .input {
     & :global {
       .el-input__inner {
         width: 250px;
-        color: #333;
         border-bottom: none;
         border-radius: 2px 2px 0 0;
       }
@@ -85,7 +157,6 @@
     & :global {
       .el-input__inner {
         width: 120px;
-        color: #ebebeb;
         border-radius: 2px;
       }
 

@@ -1,13 +1,28 @@
 import {Dispatch} from "@/definitions/type";
 import {namespace as search} from "@/component/Search/store";
-import {sleep} from "@/common/assect/util";
 
-const getItemsBySearch = async (items: any[], s = "") => {
-  if (!s || !items.length) {
-    return items;
-  } else {
-    return items;
-  }
+let timer: NodeJS.Timeout | null = null;
+const getItemsBySearch = (items: any[], s = "") => {
+  return new Promise((resolve) => {
+    timer && clearTimeout(timer);
+    timer = setInterval(() => {
+      clearTimeout(timer as NodeJS.Timeout);
+      let tempItems: any = [];
+      if (s) {
+        items.forEach((item: any) => {
+          if (item.name !== undefined && item.name.match(s)) {
+            return tempItems.push(item);
+          }
+          if (item.path !== undefined && item.path.match(s)) {
+            return tempItems.push(item);
+          }
+        });
+      } else {
+        tempItems = [...items];
+      }
+      return resolve(tempItems);
+    }, 500);
+  });
 };
 const action = {
   mapState(state: any) {
@@ -29,13 +44,15 @@ const action = {
         } else {
           await dispatch({type: `${search}/setLoading`, loading: true});
           const i = await getItemsBySearch(items, s);
-          await dispatch({type: `${search}/setLoading`, loading: true});
-          dispatch({type: `${search}/setItems`, items: i});
+          await dispatch({type: `${search}/setLoading`, loading: false});
+          await dispatch({type: `${search}/setItems`, items: i});
         }
       },
       async setSearch(s: string) {
         await dispatch({type: `${search}/setSearch`, search: s});
+        await dispatch({type: `${search}/setLoading`, loading: true});
         const i = await getItemsBySearch(params.data, s);
+        await dispatch({type: `${search}/setLoading`, loading: false});
         await dispatch({type: `${search}/setItems`, items: i});
       }
     };
