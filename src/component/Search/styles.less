@@ -2,7 +2,6 @@
 
 .search {
   position: relative;
-
   .input {
     width: auto;
 
@@ -13,12 +12,17 @@
 
       .el-input__icon {
         cursor: pointer;
+
+        &:hover{
+          &:before{
+            color: #8193a3;
+          }
+        }
       }
     }
   }
 
   .listContainer {
-    margin-top: 1px;
     width: 100%;
     box-sizing: border-box;
     position: absolute;
@@ -26,7 +30,7 @@
     overflow: hidden;
 
     border-radius: 0 0 5px 5px;
-    background-color: #FFF;
+    background-color: rgba(255,255,255,0.9);
 
     .list {
       height: 200px;
@@ -43,18 +47,19 @@
 
   .listContainer {
     max-height: 200px;
-    border: 1px solid transparent;
+    border: 1px solid rgba(69, 79, 88, 0.2);
     border-top: none;
     transition: @primary-transition2;
     box-shadow: 0 0 2px 0 rgb(0 0 0 / 4%), 0 2px 5px 0 rgb(0 0 0 / 12%);
   }
 
   .input {
+    border-bottom: 1px solid rgba(255,255,255,0.9);
     & :global {
       .el-input__inner {
         width: 250px;
-        border-color: transparent;
-        background-color: #fff;
+        border-color: rgba(69, 79, 88, 0.2);
+        background-color: rgba(255, 255, 255, 0.9);
         color: #333;
         border-bottom: none;
         border-radius: 4px 4px 0 0;
