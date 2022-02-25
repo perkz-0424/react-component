@@ -25,7 +25,7 @@ const Pc: IReactComponent<IProps> = (props) => {
         <div className={styles.body}>
           <div className={styles.tab}>
             <div className={styles.menus}>
-              1
+
             </div>
           </div>
           <div className={styles.component}>
