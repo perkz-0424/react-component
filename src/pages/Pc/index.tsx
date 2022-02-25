@@ -6,7 +6,7 @@ import {changeHtmlFontSize} from "@/common/assect/styles";
 import 'element-theme-default';
 import zhCN from "antd/lib/locale/zh_CN";
 import {ConfigProvider} from "antd";
-import {Input} from "element-react";
+// import {Input} from "element-react";
 import Image from "@/component/Image";
 
 
@@ -21,7 +21,6 @@ const Pc: IReactComponent<IProps> = (props) => {
     <React.Fragment>
       <ConfigProvider locale={zhCN}>
         <div className={styles.pc}>
-          <Input placeholder="文本框"/>
           <Image
             fileList={props.fileList}
             onChange={props.setFileList}

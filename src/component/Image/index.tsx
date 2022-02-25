@@ -59,5 +59,4 @@ const Image = (props: { fileList: any[], max?: number, title?: string, onChange:
   </div>;
 };
 
-// @ts-ignore
 export default memo(Image);
