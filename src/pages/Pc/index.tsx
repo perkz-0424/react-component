@@ -14,13 +14,21 @@ const {mapState, mapDispatch} = require("@/store/pc/action").default;
 interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapState> {
 }
 
+
 const Pc: IReactComponent<IProps> = (props) => {
+  const getSearchData = React.useCallback(() => {
+    return props["routerHistory"]["routers"][0]["children"][0]["children"]
+      .map((e: any) => ({
+        name: e.name,
+        path: e.path.toLowerCase()
+      }));
+  }, []);
   React.useEffect(() => changeEnvironment("pc"), []);
   return <React.Fragment>
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
         <div className={styles.search}>
-          <Search/>
+          <Search data={getSearchData()}/>
         </div>
         <div className={styles.body}>
           <div className={styles.tab}>

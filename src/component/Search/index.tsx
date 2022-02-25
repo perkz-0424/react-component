@@ -1,13 +1,21 @@
 import * as React from "react";
 import {Input} from "element-react";
 import styles from "./styles.less";
+import {Provider, connect} from "react-redux";
+import store from "@/component/Search/store";
 
-const Search = (props: {
+
+const {mapState, mapDispatch} = require("@/component/Search/store/action").default;
+
+interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapState> {
+  className?: string,
   onFocus?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
   onBlur?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
-  className?: string,
+  onChange?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
+  data?: any[],
+}
 
-}): React.ReactElement => {
+const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
   const [focus, set_focus] = React.useState(false);
   return <div
     className={`${styles.search} ${focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
@@ -24,6 +32,9 @@ const Search = (props: {
         set_focus(false);
         props.onBlur && props.onBlur(e);
       }}
+      onChange={(e) => {
+
+      }}
     />
     <div className={styles.listContainer}>
       <div className={styles.list}>
@@ -33,5 +44,6 @@ const Search = (props: {
       </div>
     </div>
   </div>;
-};
-export default Search;
+});
+
+export default (props: IProps) => <Provider store={store}><Search {...props}/></Provider>
