@@ -1,15 +1,10 @@
 export const namespace = "pc";
 const store = {
   namespace,
-  state: {
-    fileList: []
-  },
+  state: {},
   reducers: {
     init(state: any) {
       return {...state};
-    },
-    setFileList(state: any, {fileList}: { fileList: any[] }) {
-      return {...state, fileList};
     },
   }
 };

@@ -1,17 +1,17 @@
 import {Dispatch} from "@/definitions/type";
-import {namespace as pc} from "@/store/pc";
+import {namespace as image} from "@/store/image";
 
 const action = {
   mapState(state: any) {
     return {
-      ...state[pc],
+      ...state[image],
     };
   },
   mapDispatch(dispatch: Dispatch) {
     return {
-      init() {
-        dispatch({type: `${pc}/init`});
-      },
+      setFileList(params: any){
+        dispatch({type: `${image}/setFileList`, ...params});
+      }
     };
   }
 };

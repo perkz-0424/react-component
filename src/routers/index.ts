@@ -9,6 +9,16 @@ const routes = [
       {
         path: "/pc",
         Component: require("@/pages/Pc").default,
+        children: [
+          {
+            path: "/image",
+            Component: require("@/pages/Pc/Image").default,
+          },
+          {
+            path: "/imageCropper",
+            Component: require("@/pages/Pc/ImageCropper").default,
+          }
+        ]
       },
       {
         path: "/mobile",
