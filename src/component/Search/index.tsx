@@ -15,7 +15,7 @@ const Search = (props: {
     <Input
       placeholder="搜索组件"
       className={styles.input}
-      // icon="circle-cross"
+      icon="circle-cross"
       onFocus={(e) => {
         set_focus(true);
         props.onFocus && props.onFocus(e);

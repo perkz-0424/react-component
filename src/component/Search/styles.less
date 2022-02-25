@@ -7,11 +7,17 @@
 
     & :global {
       .el-input__inner {
+        position: relative;
         transition: @primary-transition;
+        border-color: rgba(69, 79, 88, 0.2);
+        background-color: rgba(255, 255, 255, 1);
       }
 
       .el-input__icon {
         cursor: pointer;
+        &:before{
+          transition: @primary-transition;
+        }
 
         &:hover{
           &:before{
@@ -28,9 +34,9 @@
     position: absolute;
     z-index: 1;
     overflow: hidden;
-
-    border-radius: 0 0 5px 5px;
-    background-color: rgba(255,255,255,0.96);
+    border-radius: 0 0 2px 2px;
+    background-color: rgba(255,255,255, 0.7);
+    margin-top: -2px;
 
     .list {
       height: 200px;
@@ -42,7 +48,7 @@
 
 
 .focus {
-  margin-left: 10px;
+  margin-left: 20px;
   transition: @primary-transition;
 
   .listContainer {
@@ -54,15 +60,12 @@
   }
 
   .input {
-    border-bottom: 1px solid rgba(255,255,255,0.96);
     & :global {
       .el-input__inner {
         width: 250px;
-        border-color: rgba(69, 79, 88, 0.2);
-        background-color: rgba(255, 255, 255, 0.96);
         color: #333;
         border-bottom: none;
-        border-radius: 4px 4px 0 0;
+        border-radius: 2px 2px 0 0;
       }
     }
   }
@@ -82,10 +85,8 @@
     & :global {
       .el-input__inner {
         width: 120px;
-        background-color: @primary-bg-color;
-        border-color: @primary-bg-color;
         color: #ebebeb;
-        border-radius: 4px;
+        border-radius: 2px;
       }
 
       .el-input__icon {
