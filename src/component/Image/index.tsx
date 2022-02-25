@@ -7,7 +7,14 @@ import {fail} from "@/common/assect/message";
 import "antd/es/modal/style/css";
 import "antd/es/upload/style/css";
 
-const Image = (props: { fileList: any[], max?: number, title?: string, onChange: (e: {fileList: any[]}) => any, disabled?: boolean, imageSize?: number }): React.ReactElement => {
+const Image = (props: {
+  fileList: any[],
+  onChange: (e: { fileList: any[] }) => any,
+  max?: number,
+  title?: string,
+  disabled?: boolean,
+  imageSize?: number
+}): React.ReactElement => {
   const {fileList, max, title, onChange, disabled, imageSize} = props;
   const [previewVisible, set_previewVisible] = useState(false);
   const [previewImage, set_previewImage] = useState("");
