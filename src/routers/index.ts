@@ -3,7 +3,7 @@ import config from "@/config";
 const routes = [
   {
     path: "/",
-    Component: require("@/pages/Main").default,
+    Component: require("@/pages").default,
     redirect: config.environment,
     children: [
       {
