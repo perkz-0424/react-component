@@ -13,7 +13,6 @@ import createStores from "@/store/models";
 import {Provider} from "react-redux";
 import Auth from "@/auth";
 import {getSearchToParams} from "@/common/assect/util";
-import {memo, useMemo} from "react";
 
 class RouteOptions {
   path!: string;
@@ -54,11 +53,11 @@ const getStore = (stores: any) => {
 };
 
 const renderRoutes = (o_o: Array<RouteOptions>, routers: any) => {
-  const o = window.location.search;
+  const search = window.location.search;
   return <Routes>
     {o_o.map(
       ({Component, path, realPath, children, stores}) => {
-        const C = memo(Component);
+        const C = React.memo(Component);
         const A = Auth(() => <C
           routerHistory={{
             navigate: useNavigate(),
@@ -76,9 +75,9 @@ const renderRoutes = (o_o: Array<RouteOptions>, routers: any) => {
           path={path}
           element={stores ?
             <Provider store={getStore(stores)}>
-              {useMemo(() => <A/>, [A])}
+              {React.useMemo(() => <A/>, [])}
             </Provider> :
-            <>{useMemo(() => <A/>, [A])}</>}
+            <>{React.useMemo(() => <A/>, [])}</>}
         />;
       })}
     {o_o.map(({realPath, redirect}, index) => {
@@ -86,10 +85,9 @@ const renderRoutes = (o_o: Array<RouteOptions>, routers: any) => {
         key={index}
         path={realPath}
         element={
-          <Navigate to={`${redirect}${o}`}/>
+          <Navigate to={`${redirect}${search}`}/>
         }/> : null;
     })}
-    <Route path={"*"} element={<Navigate to={`/${o}`}/>}/>
   </Routes>;
 };
 

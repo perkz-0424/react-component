@@ -9,6 +9,7 @@ const routes = [
       {
         path: "/pc",
         Component: require("@/pages/Pc").default,
+        redirect: "image",
         children: [
           {
             path: "/image",
