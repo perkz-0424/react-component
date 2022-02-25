@@ -1,0 +1,91 @@
+@import "./src/common/style/common";
+
+.search {
+  position: relative;
+
+  .input {
+    width: auto;
+
+    & :global {
+      .el-input__inner {
+        transition: @primary-transition;
+      }
+
+      .el-input__icon {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .listContainer {
+    margin-top: 1px;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+
+    border-radius: 0 0 5px 5px;
+    background-color: #FFF;
+
+    .list {
+      height: 200px;
+      width: 100%;
+      overflow-y: auto;
+    }
+  }
+}
+
+
+.focus {
+  margin-left: 10px;
+  transition: @primary-transition;
+
+  .listContainer {
+    max-height: 200px;
+    border: 1px solid transparent;
+    border-top: none;
+    transition: @primary-transition2;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 4%), 0 2px 5px 0 rgb(0 0 0 / 12%);
+  }
+
+  .input {
+    & :global {
+      .el-input__inner {
+        width: 250px;
+        border-color: transparent;
+        background-color: #fff;
+        color: #333;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+      }
+    }
+  }
+}
+
+.blur {
+  margin-left: 0;
+  transition: @primary-transition;
+
+  .listContainer {
+    max-height: 0;
+    border: 0 solid transparent;
+    transition: @primary-transition2;
+  }
+
+  .input {
+    & :global {
+      .el-input__inner {
+        width: 120px;
+        background-color: @primary-bg-color;
+        border-color: @primary-bg-color;
+        color: #ebebeb;
+        border-radius: 4px;
+      }
+
+      .el-input__icon {
+        display: none;
+      }
+    }
+  }
+}

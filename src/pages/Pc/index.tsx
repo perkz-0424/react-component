@@ -6,7 +6,7 @@ import {changeEnvironment} from "@/common/assect/styles";
 import "element-theme-default";
 import zhCN from "antd/lib/locale/zh_CN";
 import {ConfigProvider} from "antd";
-import {Input} from "element-react";
+import Search from "@/component/Search";
 
 
 const {mapState, mapDispatch} = require("@/store/pc/action").default;
@@ -20,7 +20,7 @@ const Pc: IReactComponent<IProps> = (props) => {
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
         <div className={styles.search}>
-          <Input placeholder="搜索组件" className={styles.input}/>
+          <Search/>
         </div>
         <div className={styles.body}>
           <div className={styles.tab}>
