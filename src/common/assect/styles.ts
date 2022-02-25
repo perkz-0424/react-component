@@ -1,6 +1,6 @@
 import config from "@/config";
 
-export const changeHtmlFontSize = (id: string) => {
+export const changeEnvironment = (id: string) => {
   if (config.environment !== id) {
     window.location.href = `${window.location.pathname.replace(id, config.environment)}${window.location.search}`;
     return;

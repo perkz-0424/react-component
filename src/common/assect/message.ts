@@ -1,4 +1,5 @@
 import {message} from "antd";
+import "antd/es/message/style/css";
 
 const status = {
   loading: false,

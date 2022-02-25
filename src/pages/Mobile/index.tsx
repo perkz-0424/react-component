@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./styles.less";
 import {IReactComponent} from "@/definitions/type";
 import {connect} from "react-redux";
-import {changeHtmlFontSize} from "@/common/assect/styles";
+import {changeEnvironment} from "@/common/assect/styles";
 import {ConfigProvider} from "antd-mobile"
 import zhCN from "antd-mobile/es/locales/zh-CN";
 import {Input} from "antd-mobile";
@@ -13,7 +13,7 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 }
 
 const Mobile: IReactComponent<IProps> = () => {
-  React.useEffect(() => changeHtmlFontSize("mobile"), []);
+  React.useEffect(() => changeEnvironment("mobile"), []);
   return (
     <React.Fragment>
       <ConfigProvider locale={zhCN}>

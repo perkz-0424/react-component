@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from "./styles.less";
 import {IReactComponent} from "@/definitions/type";
 import {connect} from "react-redux";
-import {changeHtmlFontSize} from "@/common/assect/styles";
+import {changeEnvironment} from "@/common/assect/styles";
 import 'element-theme-default';
 import zhCN from "antd/lib/locale/zh_CN";
 import {ConfigProvider} from "antd";
@@ -16,7 +16,7 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 }
 
 const Pc: IReactComponent<IProps> = (props) => {
-  React.useEffect(() => changeHtmlFontSize("pc"), []);
+  React.useEffect(() => changeEnvironment("pc"), []);
   return (
     <React.Fragment>
       <ConfigProvider locale={zhCN}>
