@@ -1,7 +1,52 @@
+@import '../../../src/common/style/common';
 .pc {
   font-size: 16px;
   height: 100%;
   width: 100%;
-  padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 60px;
+    padding: 10px;
+    background-color: @primary-bg-color;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    .input {
+      max-width: 300px;
+    }
+  }
+
+  .body {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    .tab {
+      position: sticky;
+      min-width: 200px;
+      box-sizing: border-box;
+      height: auto;
+
+      .menus{
+        position: fixed;
+        min-width: 200px;
+        height: 100%;
+      }
+    }
+
+    .component {
+      box-sizing: border-box;
+      height: 100%;
+      flex: 1;
+    }
+  }
 }

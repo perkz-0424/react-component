@@ -6,6 +6,7 @@ import {changeEnvironment} from "@/common/assect/styles";
 import "element-theme-default";
 import zhCN from "antd/lib/locale/zh_CN";
 import {ConfigProvider} from "antd";
+import {Input} from "element-react";
 
 
 const {mapState, mapDispatch} = require("@/store/pc/action").default;
@@ -18,7 +19,19 @@ const Pc: IReactComponent<IProps> = (props) => {
   return <React.Fragment>
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
-        {props.childrenRouter()}
+        <div className={styles.search}>
+          <Input placeholder="搜索组件" className={styles.input}/>
+        </div>
+        <div className={styles.body}>
+          <div className={styles.tab}>
+            <div className={styles.menus}>
+              1
+            </div>
+          </div>
+          <div className={styles.component}>
+            {props.childrenRouter()}
+          </div>
+        </div>
       </div>
     </ConfigProvider>
   </React.Fragment>;
