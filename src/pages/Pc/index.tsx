@@ -20,7 +20,8 @@ const Pc: IReactComponent<IProps> = (props) => {
     return props["routerHistory"]["routers"][0]["children"][0]["children"]
       .map((e: any) => ({
         name: e.name,
-        path: e.path.toLowerCase()
+        enName: e.path.replace("/", ""),
+        path: e.path.toLowerCase().replace("/", "")
       }));
   }, []);
   React.useEffect(() => changeEnvironment("pc"), []);

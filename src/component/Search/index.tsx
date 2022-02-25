@@ -13,28 +13,32 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
   onBlur?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
   onChange?: (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined) => any,
   data?: any[],
+  readonly search?: string,
+  readonly focus?: boolean,
+  readonly items?: any[],
 }
 
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
-  const [focus, set_focus] = React.useState(false);
+  console.log(props)
   return <div
-    className={`${styles.search} ${focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
+    className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
   >
     <Input
+      value={props.search}
       placeholder="搜索组件"
       className={styles.input}
       icon="circle-cross"
-      onFocus={(e) => {
-        set_focus(true);
+      onFocus={async (e) => {
+        await props.setFocus(true);
+        await props.setItems(props.data, props.search);
         props.onFocus && props.onFocus(e);
       }}
-      onBlur={(e) => {
-        set_focus(false);
+      onBlur={async (e) => {
+        await props.setFocus(false);
+        await props.setItems([], props.search);
         props.onBlur && props.onBlur(e);
       }}
-      onChange={(e) => {
-
-      }}
+      onChange={props.setSearch}
     />
     <div className={styles.listContainer}>
       <div className={styles.list}>
