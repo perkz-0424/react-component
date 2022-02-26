@@ -4,6 +4,7 @@ import styles from "./styles.less";
 import {Provider, connect} from "react-redux";
 import store from "@/component/Search/store";
 import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
+import {useCallback} from "react";
 
 
 const {mapState, mapDispatch} = require("@/component/Search/store/action").default;
@@ -41,6 +42,18 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
         return document.removeEventListener("click", blur, false);
     }
   }, []);
+
+  const content = useCallback((message: string) => {
+    if (props.search) {
+      const msg = message.split(props.search as string);
+      if (msg.length === 2) {
+        return <>{msg[0]}<span className={styles.sStyle}>{props.search}</span>{msg[1]}</>;
+      }
+      return message;
+    } else {
+      return message;
+    }
+  }, [props.search]);
   return <div
     id={search_id}
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
@@ -72,7 +85,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
                 .then(() => props.setFocus(false))
                 .then(() => event("-"))
                 .then(() => props.goTo(i.enName))}>
-              <span className={styles.name}>{i.enName}：{i.name}</span>
+              <span className={styles.name}>{content(`${i.name} ${i.enName}`)}</span>
               <span><SearchOutlined className={styles.icon}/></span>
             </div>;
           })}
