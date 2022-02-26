@@ -16,21 +16,13 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 
 
 const Pc: IReactComponent<IProps> = (props) => {
-  const getSearchData = React.useCallback(() => {
-    return props["routerHistory"]["routers"][0]["children"][0]["children"]
-      .map((e: any) => ({
-        name: e.name,
-        enName: e.path.replace("/", ""),
-        path: e.path.toLowerCase().replace("/", "")
-      }));
-  }, []);
   React.useEffect(() => changeEnvironment("pc"), []);
   return <React.Fragment>
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
         <div className={styles.search}>
           <Search
-            data={getSearchData()}
+            data={props.getSearchData()}
             goTo={(path) => props.routerHistory.navigate(path)}
           />
         </div>
