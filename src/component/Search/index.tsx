@@ -23,25 +23,24 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 const search_id = `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`;
 
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
-  React.useEffect(() => remove, []);
+  React.useEffect(() => () => event("-"), []);
 
-  const onBlur = (e: any) => {
+  const blur = React.useCallback((e: any) => {
     const blur = !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === search_id)[0];
     if (blur) {
       props.setFocus(false);
-      remove();
+      event("-");
     }
-  };
+  }, []);
 
-  const add = () => {
-    console.log("+")
-    document.addEventListener("click", onBlur, false);
-  };
-
-  const remove = () => {
-    console.log("-")
-    document.removeEventListener("click", onBlur, false);
-  };
+  const event = React.useCallback((type: string) => {
+    switch (type) {
+      case "+":
+        return document.addEventListener("click", blur, false);
+      case "-":
+        return document.removeEventListener("click", blur, false);
+    }
+  }, []);
   return <div
     id={search_id}
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
@@ -54,7 +53,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
       onFocus={(e) => {
         props.setFocus(true);
         props.setItems(props.data, props.search).then(null);
-        add();
+        event("+");
         props.onFocus && props.onFocus(e);
       }}
       onBlur={(e) => {
@@ -71,7 +70,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
               key={key} className={styles.item}
               onClick={() => props.setSearch(i.name, [i])
                 .then(() => props.setFocus(false))
-                .then(() => remove())
+                .then(() => event("-"))
                 .then(() => props.goTo(i.enName))}>
               <span className={styles.name}>{i.enName}：{i.name}</span>
               <span><SearchOutlined className={styles.icon}/></span>
