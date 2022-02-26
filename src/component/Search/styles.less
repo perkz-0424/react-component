@@ -29,6 +29,22 @@
     }
   }
 
+  .isDel {
+    & :global {
+      .el-input__icon {
+        display: block;
+      }
+    }
+  }
+
+  .noDel {
+    & :global {
+      .el-input__icon {
+        display: none;
+      }
+    }
+  }
+
   .listContainer {
     width: 100%;
     box-sizing: border-box;
@@ -163,26 +179,6 @@
         width: 120px;
         border-radius: 2px;
         color: #7b8389;
-      }
-    }
-  }
-}
-
-.isDel {
-  .input {
-    & :global {
-      .el-input__icon {
-        display: block;
-      }
-    }
-  }
-}
-
-.noDel {
-  .input {
-    & :global {
-      .el-input__icon {
-        display: none;
       }
     }
   }
