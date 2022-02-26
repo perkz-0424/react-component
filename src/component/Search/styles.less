@@ -8,7 +8,6 @@
 
     & :global {
       .el-input__inner {
-        //position: relative;
         transition: @primary-transition;
         border-color: rgba(69, 79, 88, 0.2);
         background-color: rgba(255, 255, 255, 1);
@@ -95,16 +94,19 @@
           padding: 0 10px;
           font-size: 14px;
           color: #586774;
-          box-shadow:  0 1px 2px 0 rgba(103, 129, 147, 0.3);
-          span{
-            white-space:nowrap;
+          box-shadow: 0 1px 2px 0 rgba(103, 129, 147, 0.3);
+
+          span {
+            white-space: nowrap;
           }
-          .name{
+
+          .name {
             max-width: 190px;
             overflow: hidden;
-            text-overflow:ellipsis;
+            text-overflow: ellipsis;
           }
-          .icon{
+
+          .icon {
             font-size: 16px;
           }
 
@@ -162,9 +164,25 @@
         border-radius: 2px;
         color: #7b8389;
       }
+    }
+  }
+}
 
+.isDel {
+  .input {
+    & :global {
       .el-input__icon {
-        //display: none;
+        display: block;
+      }
+    }
+  }
+}
+
+.noDel {
+  .input {
+    & :global {
+      .el-input__icon {
+        display: none;
       }
     }
   }

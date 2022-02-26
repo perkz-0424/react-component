@@ -23,7 +23,7 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
   return <div
     id="search_id"
-    className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
+    className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.search ? styles.isDel : styles.noDel} ${props.className ? props.className : ""}`}
   >
     <Input
       value={props.search as string}
