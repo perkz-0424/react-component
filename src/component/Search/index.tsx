@@ -20,9 +20,30 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
   readonly items?: any[],
 }
 
+const search_id = `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`;
+
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
+  React.useEffect(() => remove, []);
+
+  const onBlur = (e: any) => {
+    const blur = !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === search_id)[0];
+    if (blur) {
+      props.setFocus(false);
+      remove();
+    }
+  };
+
+  const add = () => {
+    console.log("+")
+    document.addEventListener("click", onBlur, false);
+  };
+
+  const remove = () => {
+    console.log("-")
+    document.removeEventListener("click", onBlur, false);
+  };
   return <div
-    id="search_id"
+    id={search_id}
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
   >
     <Input
@@ -30,9 +51,10 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
       placeholder="搜索组件"
       className={`${styles.input} ${props.search ? styles.isDel : styles.noDel}`}
       icon="circle-cross"
-      onFocus={async (e) => {
-        await props.setFocus(true);
-        await props.setItems(props.data, props.search);
+      onFocus={(e) => {
+        props.setFocus(true);
+        props.setItems(props.data, props.search).then(null);
+        add();
         props.onFocus && props.onFocus(e);
       }}
       onBlur={(e) => {
@@ -47,7 +69,10 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
           {props.items.map((i: { name: string, enName: string }, key) => {
             return <div
               key={key} className={styles.item}
-              onClick={() => props.setSearch(i.name, [i]).then(() => props.setFocus(false)).then(() => props.goTo(i.enName))}>
+              onClick={() => props.setSearch(i.name, [i])
+                .then(() => props.setFocus(false))
+                .then(() => remove())
+                .then(() => props.goTo(i.enName))}>
               <span className={styles.name}>{i.enName}：{i.name}</span>
               <span><SearchOutlined className={styles.icon}/></span>
             </div>;
