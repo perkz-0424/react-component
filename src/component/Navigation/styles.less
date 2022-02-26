@@ -1,4 +1,4 @@
-@import "src/common/style/common";
+@import "../../../src/common/style/common";
 
 .navigation {
   position: sticky;
@@ -10,6 +10,7 @@
     position: fixed;
     height: 100%;
     background-color: @primary-bg-color;
+    box-shadow: 1px 0 4px 0 rgba(99, 125, 142, 0.3);
   }
 
   .point {
@@ -19,12 +20,13 @@
     bottom: 50%;
     z-index: 1000;
     cursor: pointer;
-    background-color: rgba(129, 147, 163, 0.2);
+    background-color: rgba(129, 147, 163, 0);
     display: flex;
     align-items: center;
 
     &:hover {
-      background-color: rgba(129, 147, 163, 0.4);
+      background-color: rgba(129, 147, 163, 0.2);
+      color: #ebebeb;
     }
   }
 }
@@ -60,6 +62,8 @@
     border-radius: 0 80px 80px 0;
     background-color: rgba(129, 147, 163, 0.4);
     color: #ebebeb;
+    box-shadow: 1px 0 4px 0 rgba(99, 125, 142, 0.3);
+
 
     &:hover {
       background-color: rgba(129, 147, 163, 0.7);

@@ -27,21 +27,6 @@ a {
 
 html {
   overflow: auto;
-}
-
-html::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-html::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #ebebeb;
-}
-
-html::-webkit-scrollbar-track { /*滚动条里面轨道*/
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  background: #fff;
+  min-width: 1200px;
+  position: relative;
 }

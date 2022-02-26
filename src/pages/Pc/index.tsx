@@ -29,7 +29,7 @@ const Pc: IReactComponent<IProps> = (props) => {
         </div>
         <div className={styles.body}>
           <Navigation data={data}/>
-          <div className={styles.component}>
+          <div className={styles.componentContainer}>
             {props.childrenRouter()}
           </div>
         </div>
