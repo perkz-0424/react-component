@@ -39,7 +39,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
         props.onBlur && props.onBlur(e);
       }}
       onChange={props.setSearch}
-      onIconClick={() => props.setSearch("", []).then(() => props.setFocus(false))}
+      onIconClick={() => props.setSearch("")}
     />
     <div className={styles.listContainer}>
       <div className={styles.list}>
