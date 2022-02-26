@@ -22,11 +22,10 @@ const Pc: IReactComponent<IProps> = (props) => {
   return <React.Fragment>
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
-        <div className={styles.search}>
-          <Search
-            data={data}
-            goTo={(path) => props.routerHistory.navigate(path)}
-          />
+        <div className={styles.topContainer}>
+          <div className={styles.top}>
+            <Search data={data} goTo={(path) => props.routerHistory.navigate(path)}/>
+          </div>
         </div>
         <div className={styles.body}>
           <Navigation data={data}/>

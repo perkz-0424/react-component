@@ -9,17 +9,25 @@
   flex-direction: column;
   position: relative;
 
-  .search {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  .topContainer, .top {
     height: 60px;
-    padding: 10px;
-    background-color: @primary-bg-color;
-    position: sticky;
     top: 0;
     left: 0;
     z-index: 1;
+  }
+
+  .topContainer {
+    position: sticky;
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      background-color: @primary-bg-color;
+      position: fixed;
+      width: 100%;
+    }
   }
 
   .body {
