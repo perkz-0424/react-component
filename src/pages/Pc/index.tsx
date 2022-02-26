@@ -7,6 +7,7 @@ import "element-theme-default";
 import zhCN from "antd/lib/locale/zh_CN";
 import {ConfigProvider} from "antd";
 import Search from "@/component/Search";
+import Navigation from "@/component/Navigation";
 
 
 const {mapState, mapDispatch} = require("@/store/pc/action").default;
@@ -17,21 +18,18 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 
 const Pc: IReactComponent<IProps> = (props) => {
   React.useEffect(() => changeEnvironment("pc"), []);
+  const data = props.getSearchData();
   return <React.Fragment>
     <ConfigProvider locale={zhCN}>
       <div className={styles.pc}>
         <div className={styles.search}>
           <Search
-            data={props.getSearchData()}
+            data={data}
             goTo={(path) => props.routerHistory.navigate(path)}
           />
         </div>
         <div className={styles.body}>
-          <div className={styles.tab}>
-            <div className={styles.menus}>
-
-            </div>
-          </div>
+          <Navigation data={data}/>
           <div className={styles.component}>
             {props.childrenRouter()}
           </div>
