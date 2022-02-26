@@ -2,24 +2,67 @@
 
 .navigation {
   position: sticky;
-  min-width: 200px;
   box-sizing: border-box;
   height: auto;
+  width: 200px;
 
   .menus {
     position: fixed;
-    min-width: 200px;
     height: 100%;
-    //background-color: @primary-bg-color;
-    background-color: #8193a3;
+    background-color: @primary-bg-color;
   }
-  .point{
+
+  .point {
     position: absolute;
-    width: 30px;
-    height: 80px;
-    border: 1px solid #000;
-    right: 0;
+    width: 20px;
+    height: 40px;
     bottom: 50%;
     z-index: 1000;
+    cursor: pointer;
+    background-color: rgba(129, 147, 163, 0.2);
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(129, 147, 163, 0.4);
+    }
+  }
+}
+
+.open, .menus, .close, .point {
+  transition: @primary-transition;
+}
+
+
+.open {
+  width: 200px;
+
+  .menus {
+    width: 200px;
+  }
+
+  .point {
+    right: 0;
+    border-radius: 80px 0 0 80px;
+    color: #c9c9c9;
+  }
+}
+
+.close {
+  width: 0;
+
+  .menus {
+    width: 0;
+  }
+
+  .point {
+    right: -20px;
+    border-radius: 0 80px 80px 0;
+    background-color: rgba(129, 147, 163, 0.4);
+    color: #ebebeb;
+
+    &:hover {
+      background-color: rgba(129, 147, 163, 0.7);
+    }
   }
 }
