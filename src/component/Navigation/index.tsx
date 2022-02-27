@@ -28,62 +28,6 @@ const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactEl
               </li>)}
             </ul>
           </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
-              </li>)}
-            </ul>
-          </li>)}
         </ul>
       </div>
       <div className={styles.point} onClick={() => props.setOpen(!props.open)}>
