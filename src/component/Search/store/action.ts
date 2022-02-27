@@ -4,13 +4,13 @@ import {namespace as search} from "@/component/Search/store";
 const action = {
   mapLocal: {
     time: null as NodeJS.Timeout | null,
-    searchId:  `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`,
-    getItemsBySearch (items: any[], search = "") {
-      console.log(this)
+    key: `${Math.ceil(Math.random() * 100)}${new Date().getTime()}${Math.ceil(Math.random() * 100)}`,
+    getItemsBySearch(items: any[], search = "") {
       return new Promise((resolve) => {
-        action.mapLocal.time && clearTimeout(action.mapLocal.time);
-        action.mapLocal.time = setInterval(() => {
-          clearTimeout(action.mapLocal.time as NodeJS.Timeout);
+        this.time && clearTimeout(this.time);
+        this.time = setInterval(() => {
+          clearTimeout(this.time as NodeJS.Timeout);
+          this.time = null;
           let tempItems: any = [];
           if (search) {
             items.forEach((item: any) => {
@@ -25,14 +25,14 @@ const action = {
             tempItems = [...items];
           }
           return resolve(tempItems);
-        }, 300);
+        }, 500);
       });
     }
   },
   mapState(state: any) {
     return {
       ...state[search],
-      search_id: action.mapLocal.searchId,
+      searchKey: action.mapLocal.key,
     };
   },
   mapDispatch(dispatch: Dispatch, params: any) {
@@ -66,7 +66,7 @@ const action = {
       },
       getBlurBool(e: any) {
         if (e.path) {
-          return !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === action.mapLocal.searchId)[0];
+          return !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === action.mapLocal.key)[0];
         } else {
           const ids = [];
           (function a(t) {
@@ -77,7 +77,7 @@ const action = {
               a(t.parentNode);
             }
           })(e.target);
-          return ids.findIndex((e) => e === action.mapLocal.searchId) === -1;
+          return ids.findIndex((e) => e === action.mapLocal.key) === -1;
         }
       }
     };

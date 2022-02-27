@@ -52,7 +52,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
     }
   }, [props.search]);
   return <div
-    id={props.search_id}
+    id={props.searchKey}
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
   >
     <Input
