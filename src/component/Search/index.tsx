@@ -5,6 +5,7 @@ import {Provider, connect} from "react-redux";
 import store from "@/component/Search/store";
 import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
 import {useCallback} from "react";
+import {search_id} from "@/component/Search/store/action";
 
 
 const {mapState, mapDispatch} = require("@/component/Search/store/action").default;
@@ -21,14 +22,11 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
   readonly items?: any[],
 }
 
-const search_id = `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`;
-
 const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
   React.useEffect(() => () => event("-"), []);
 
   const blur = React.useCallback((e: any) => {
-    const blur = !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === search_id)[0];
-    if (blur) {
+    if (props.getBlurBool(e)) {
       props.setFocus(false);
       event("-");
     }

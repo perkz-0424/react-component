@@ -2,6 +2,7 @@ import {Dispatch} from "@/definitions/type";
 import {namespace as search} from "@/component/Search/store";
 
 let timer: NodeJS.Timeout | null = null;
+export const search_id = `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`;
 const getItemsBySearch = (items: any[], s = "") => {
   return new Promise((resolve) => {
     timer && clearTimeout(timer);
@@ -57,6 +58,22 @@ const action = {
           await dispatch({type: `${search}/setItems`, items: i});
         } else {
           await dispatch({type: `${search}/setItems`, items: v});
+        }
+      },
+      getBlurBool(e: any) {
+        if (e.path) {
+          return !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === search_id)[0];
+        } else {
+          const ids = [];
+          (function a(t) {
+            if (!!t.id) {
+              ids.push(t.id);
+            }
+            if (t.parentNode) {
+              a(t.parentNode);
+            }
+          })(e.target);
+          return ids.findIndex((e) => e === search_id) === -1;
         }
       }
     };
