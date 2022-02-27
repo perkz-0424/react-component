@@ -5,7 +5,6 @@ import {Provider, connect} from "react-redux";
 import store from "@/component/Search/store";
 import {LoadingOutlined, SearchOutlined} from "@ant-design/icons";
 import {useCallback} from "react";
-import {search_id} from "@/component/Search/store/action";
 
 
 const {mapState, mapDispatch} = require("@/component/Search/store/action").default;
@@ -53,7 +52,7 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
     }
   }, [props.search]);
   return <div
-    id={search_id}
+    id={props.search_id}
     className={`${styles.search} ${props.focus ? styles.focus : styles.blur} ${props.className ? props.className : ""}`}
   >
     <Input

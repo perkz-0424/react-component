@@ -1,34 +1,38 @@
 import {Dispatch} from "@/definitions/type";
 import {namespace as search} from "@/component/Search/store";
 
-let timer: NodeJS.Timeout | null = null;
-export const search_id = `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`;
-const getItemsBySearch = (items: any[], s = "") => {
-  return new Promise((resolve) => {
-    timer && clearTimeout(timer);
-    timer = setInterval(() => {
-      clearTimeout(timer as NodeJS.Timeout);
-      let tempItems: any = [];
-      if (s) {
-        items.forEach((item: any) => {
-          if (item.name !== undefined && item.name.match(s)) {
-            return tempItems.push(item);
-          }
-          if (item.path !== undefined && item.path.match(s)) {
-            return tempItems.push(item);
-          }
-        });
-      } else {
-        tempItems = [...items];
-      }
-      return resolve(tempItems);
-    }, 300);
-  });
-};
 const action = {
+  mapLocal: {
+    time: null as NodeJS.Timeout | null,
+    searchId:  `${Math.ceil(Math.random() * 100)}${new Date().getTime()}`,
+    getItemsBySearch (items: any[], search = "") {
+      console.log(this)
+      return new Promise((resolve) => {
+        action.mapLocal.time && clearTimeout(action.mapLocal.time);
+        action.mapLocal.time = setInterval(() => {
+          clearTimeout(action.mapLocal.time as NodeJS.Timeout);
+          let tempItems: any = [];
+          if (search) {
+            items.forEach((item: any) => {
+              if (item.name !== undefined && item.name.match(search)) {
+                return tempItems.push(item);
+              }
+              if (item.path !== undefined && item.path.match(search)) {
+                return tempItems.push(item);
+              }
+            });
+          } else {
+            tempItems = [...items];
+          }
+          return resolve(tempItems);
+        }, 300);
+      });
+    }
+  },
   mapState(state: any) {
     return {
       ...state[search],
+      search_id: action.mapLocal.searchId,
     };
   },
   mapDispatch(dispatch: Dispatch, params: any) {
@@ -44,7 +48,7 @@ const action = {
           dispatch({type: `${search}/setItems`, items});
         } else {
           await dispatch({type: `${search}/setLoading`, loading: true});
-          const i = await getItemsBySearch(items, s);
+          const i = await action.mapLocal.getItemsBySearch(items, s);
           await dispatch({type: `${search}/setLoading`, loading: false});
           await dispatch({type: `${search}/setItems`, items: i});
         }
@@ -53,7 +57,7 @@ const action = {
         await dispatch({type: `${search}/setSearch`, search: s});
         if (!v) {
           await dispatch({type: `${search}/setLoading`, loading: true});
-          const i = await getItemsBySearch(params.data, s);
+          const i = await action.mapLocal.getItemsBySearch(params.data, s);
           await dispatch({type: `${search}/setLoading`, loading: false});
           await dispatch({type: `${search}/setItems`, items: i});
         } else {
@@ -62,7 +66,7 @@ const action = {
       },
       getBlurBool(e: any) {
         if (e.path) {
-          return !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === search_id)[0];
+          return !e.path.map((e: { id?: string }) => e.id).filter((e?: string) => e && e === action.mapLocal.searchId)[0];
         } else {
           const ids = [];
           (function a(t) {
@@ -73,7 +77,7 @@ const action = {
               a(t.parentNode);
             }
           })(e.target);
-          return ids.findIndex((e) => e === search_id) === -1;
+          return ids.findIndex((e) => e === action.mapLocal.searchId) === -1;
         }
       }
     };
