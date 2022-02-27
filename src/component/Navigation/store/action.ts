@@ -16,7 +16,7 @@ const action = {
         dispatch({type: `${navigation}/setOpen`, open});
       },
       sortMenus() {
-        console.log(params.data)
+        // console.log(params.data)
         // params.data
       }
     };

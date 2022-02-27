@@ -43,8 +43,14 @@ const Search = connect(mapState, mapDispatch)((props: IProps): React.ReactElemen
   const content = useCallback((message: string) => {
     if (props.search) {
       const msg = message.split(props.search as string);
-      if (msg.length === 2) {
-        return <>{msg[0]}<span className={styles.sStyle}>{props.search}</span>{msg[1]}</>;
+      if (msg.length > 1) {
+        return <>
+          {msg.map((i, v) => <span key={v}>
+              {v ? <span className={styles.sStyle}>
+                {props.search}
+              </span> : <></>}{i}
+            </span>)}
+        </>;
       }
       return message;
     } else {
