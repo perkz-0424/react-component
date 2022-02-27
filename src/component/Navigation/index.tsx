@@ -30,6 +30,8 @@ const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactEl
           </li>)}
         </ul>
       </div>
+    </div>
+    <div className={`${styles.pointContainer}`}>
       <div className={styles.point} onClick={() => props.setOpen(!props.open)}>
         {props.open ? <Icon name="arrow-left"/> : <Icon name="arrow-right"/>}
       </div>
