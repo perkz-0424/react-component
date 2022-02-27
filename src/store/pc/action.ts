@@ -13,12 +13,17 @@ const action = {
         dispatch({type: `${pc}/init`});
       },
       getSearchData() {
-        return params["routerHistory"]["routers"][0]["children"][0]["children"]
-          .map((e: any) => ({
-            name: e.name,
-            enName: e.path.replace("/", ""),
-            path: e.path.toLowerCase().replace("/", "")
-          }));
+        const array = params["routerHistory"]["routers"][0]
+        && params["routerHistory"]["routers"][0]["children"]
+        && params["routerHistory"]["routers"][0]["children"][0]
+        && params["routerHistory"]["routers"][0]["children"][0]["children"]
+          ? params["routerHistory"]["routers"][0]["children"][0]["children"] : [];
+        return array.map((e: any) => ({
+          name: e.name,
+          enName: e.path.replace("/", ""),
+          path: e.path.toLowerCase().replace("/", ""),
+          sortName: e.sortName
+        }));
       }
     };
   }

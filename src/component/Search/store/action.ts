@@ -14,6 +14,9 @@ const action = {
           let tempItems: any = [];
           if (search) {
             items.forEach((item: any) => {
+              if (item.sortName !== undefined && item.sortName.match(search)) {
+                return tempItems.push(item);
+              }
               if (item.name !== undefined && item.name.match(search)) {
                 return tempItems.push(item);
               }

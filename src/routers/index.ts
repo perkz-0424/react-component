@@ -15,12 +15,14 @@ const routes = [
           {
             path: "/image",
             Component: require("@/pages/Pc/Image").default,
-            name: "图片上传"
+            name: "图片上传",
+            sortName: "图片"
           },
           {
             path: "/imageCropper",
             Component: require("@/pages/Pc/ImageCropper").default,
-            name: "图片裁剪"
+            name: "图片裁剪",
+            sortName: "图片"
           }
         ]
       },

@@ -14,6 +14,7 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
 }
 
 const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
+  const menus = props.sortMenus();
   return <div
     className={`${styles.navigation} ${props.open ? styles.open : styles.close} ${props.className ? props.className : ""}`}>
     <div className={`${styles.menus}`}>

@@ -7,7 +7,7 @@ const action = {
       ...state[navigation],
     };
   },
-  mapDispatch(dispatch: Dispatch) {
+  mapDispatch(dispatch: Dispatch, params: any) {
     return {
       init() {
         dispatch({type: `${navigation}/init`});
@@ -15,6 +15,10 @@ const action = {
       setOpen(open: boolean) {
         dispatch({type: `${navigation}/setOpen`, open});
       },
+      sortMenus() {
+        console.log(params.data)
+        // params.data
+      }
     };
   }
 };
