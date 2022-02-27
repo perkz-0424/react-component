@@ -28,7 +28,13 @@ const Pc: IReactComponent<IProps> = (props) => {
           </div>
         </div>
         <div className={styles.body}>
-          {React.useMemo(() => <Navigation data={data}/>, [])}
+          {React.useMemo(() =>
+            <Navigation
+              data={data}
+              goTo={(path) => props.routerHistory.navigate(path)}
+              path={props.routerHistory.params["*"].split("/")[0]}
+            />
+            , [props.routerHistory.params["*"]])}
           <div className={styles.componentContainer}>
             {props.childrenRouter()}
           </div>

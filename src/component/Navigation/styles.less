@@ -17,12 +17,13 @@
       position: absolute;
       width: 20px;
       height: 40px;
-      bottom: 50%;
+      top: 50%;
       z-index: 1000;
       cursor: pointer;
       background-color: rgba(129, 147, 163, 0);
       display: flex;
       align-items: center;
+      margin-top: 10px;
 
       &:hover {
         background-color: rgba(129, 147, 163, 0.2);
@@ -45,7 +46,7 @@
       right: 0;
 
       .group {
-        padding: 20px 0 20px 5px;
+        padding: 20px 0 20px 10px;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -57,24 +58,31 @@
           text-overflow: ellipsis;
           overflow: hidden;
           display: inline-block;
+          transition: @primary-transition;
         }
 
         .level1 {
-          margin-bottom: 5px;
-          padding-left: 4px;
+          margin-bottom: 10px;
+          padding-left: 5px;
           box-sizing: border-box;
           font-size: 11px;
           color: #999999;
 
           .group2 {
             padding-left: 10px;
-
             .level2 {
               font-size: 13px;
               color: #5e6d82;
               font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
               cursor: pointer;
-              transition: @primary-transition;
+              margin-bottom: 10px;
+
+              .active {
+                transition: @primary-transition;
+                font-size: 16px;
+                padding: 5px 0;
+                color: #444f5e;
+              }
 
               &:hover {
                 color: #444f5e;
@@ -99,7 +107,8 @@
   .menus {
     width: 200px;
   }
-  .pointContainer{
+
+  .pointContainer {
     width: 220px;
   }
 
@@ -117,7 +126,7 @@
     width: 0;
   }
 
-  .pointContainer{
+  .pointContainer {
     width: 0;
   }
 

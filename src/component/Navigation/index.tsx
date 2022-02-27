@@ -7,10 +7,11 @@ import {Icon} from "element-react";
 const {mapState, mapDispatch} = require("@/component/Navigation/store/action").default;
 
 interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapState> {
-  goTo?: (path: string) => any
+  goTo: (path: string) => any
   className?: string,
   data?: any[],
   readonly open?: boolean,
+  path?: string,
 }
 
 const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
@@ -23,8 +24,11 @@ const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactEl
           {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
             <span>{i.name}</span>
             <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li key={k} className={styles.level2}>
-                <span>{v.path}：{v.name}</span>
+              {i.children.map((v: any, k: any) => <li
+                key={k}
+                className={styles.level2}
+                onClick={() => props.goTo(v.enName)}>
+                <span className={props.path === v.enName ? styles.active : ""}>{v.name}({v.path})</span>
               </li>)}
             </ul>
           </li>)}

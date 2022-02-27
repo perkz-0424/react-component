@@ -19,7 +19,7 @@ const routes = [
             keywords: ["图片"]
           },
           {
-            path: "/imageCropper",
+            path: "/cropper",
             Component: require("@/pages/Pc/ImageCropper").default,
             name: "图片裁剪",
             keywords: ["图片"]
