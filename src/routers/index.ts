@@ -28,7 +28,7 @@ const routes = [
             path: "/h52PDF",
             Component: require("@/pages/Pc/H52PDF").default,
             name: "H5转PDF",
-            keywords: ["pdf","图片","h5"]
+            keywords: ["PHF", "图片", "H5"]
           },
           {
             path: "/lazyPicture",

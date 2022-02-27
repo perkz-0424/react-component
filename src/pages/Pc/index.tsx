@@ -24,11 +24,11 @@ const Pc: IReactComponent<IProps> = (props) => {
       <div className={styles.pc}>
         <div className={styles.topContainer}>
           <div className={styles.top}>
-            <Search data={data} goTo={(path) => props.routerHistory.navigate(path)}/>
+            {React.useMemo(() => <Search data={data} goTo={(path) => props.routerHistory.navigate(path)}/>, [])}
           </div>
         </div>
         <div className={styles.body}>
-          <Navigation data={data}/>
+          {React.useMemo(() => <Navigation data={data}/>, [])}
           <div className={styles.componentContainer}>
             {props.childrenRouter()}
           </div>

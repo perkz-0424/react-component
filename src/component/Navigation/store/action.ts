@@ -16,8 +16,20 @@ const action = {
         dispatch({type: `${navigation}/setOpen`, open});
       },
       sortMenus() {
-        // console.log(params.data)
-        // params.data
+        const keywordsGroup: any = {};
+        params.data.forEach((i: any) => {
+          if (i.keywords && i.keywords[0]) {
+            keywordsGroup[i.keywords[0]] = keywordsGroup[i.keywords[0]] ? [...keywordsGroup[i.keywords[0]], i] : [i];
+          } else {
+            keywordsGroup["其他"] = keywordsGroup["其他"] ? [...keywordsGroup["其他"], i] : [i];
+          }
+        });
+        const group = Object.entries(keywordsGroup).map(([name, value], index) => ({
+          name,
+          key: name === "其他" ? -1 : index,
+          children: value
+        }));
+        return group.sort((a, b) => b.key - a.key);
       }
     };
   }

@@ -30,3 +30,6 @@ html {
   min-width: 1200px;
   position: relative;
 }
+li{
+  list-style: none;
+}
