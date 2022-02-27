@@ -16,13 +16,25 @@ const routes = [
             path: "/image",
             Component: require("@/pages/Pc/Image").default,
             name: "图片上传",
-            sortName: "图片"
+            keywords: ["图片"]
           },
           {
             path: "/imageCropper",
             Component: require("@/pages/Pc/ImageCropper").default,
             name: "图片裁剪",
-            sortName: "图片"
+            keywords: ["图片"]
+          },
+          {
+            path: "/h52PDF",
+            Component: require("@/pages/Pc/H52PDF").default,
+            name: "H5转PDF",
+            keywords: ["pdf","图片","h5"]
+          },
+          {
+            path: "/lazyPicture",
+            Component: require("@/pages/Pc/LazyPicture").default,
+            name: "懒图",
+            keywords: ["图片"]
           }
         ]
       },

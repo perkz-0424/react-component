@@ -22,7 +22,7 @@ const action = {
           name: e.name,
           enName: e.path.replace("/", ""),
           path: e.path.toLowerCase().replace("/", ""),
-          sortName: e.sortName
+          keywords: e.keywords
         }));
       }
     };
