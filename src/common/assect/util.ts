@@ -86,7 +86,7 @@ export const randAChar = () => {
   }
 };
 
-export const randCode = (n = 4) => {
+export const randCode = (n = Math.random() * 5) => {
   let s = "";
   for (let i = 0; i < n; i++) {
     s += randAChar();
