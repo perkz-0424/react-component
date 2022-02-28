@@ -1,3 +1,69 @@
-.cropper{
+@import "../../../src/common/style/common";
 
+.cropper {
+  .cropper_body {
+    text-align: center;
+    background-size: cover;
+    position: relative;
+
+    .mark {
+      position: absolute;
+      z-index: 10;
+      background-color: rgba(0, 0, 0, 0);
+      border: 1px solid #4569d4;
+      box-sizing: border-box;
+
+      .stretch {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background-color: #4569d4;
+      }
+
+      .T, .L, .R, .B {
+        border-radius: 50%;
+      }
+    }
+
+    .baffle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 8;
+      left: 0;
+      top: 0;
+    }
+
+    .head_picture {
+      position: absolute;
+      z-index: 9;
+      box-sizing: border-box;
+    }
+  }
+
+  .reselect_img {
+    margin-top: 15px;
+
+    .reselect_btn {
+      color: #fff;
+      font-family: PingFangSC-Regular, PingFang SC, serif;
+      font-size: 14px;
+      font-weight: 400;
+      display: inline-block;
+      width: 90px;
+      text-align: center;
+      cursor: pointer;
+      height: 32px;
+      border-radius: 2px;
+      background: #1991EB;
+      line-height: 32px;
+      transition: background 0.2s linear 50ms;
+    }
+
+    .reselect_btn:hover {
+      background: #52a2dc;
+      transition: background 0.2s linear 50ms;
+    }
+  }
 }

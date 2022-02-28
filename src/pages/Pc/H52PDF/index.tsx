@@ -17,10 +17,10 @@ const H52PDF = (): React.ReactElement => {
       </div>
     </H52PDFComponent>
     <div className={styles.buttons}>
-      <Button onClick={() => download("download").then((info) => console.log(info))}>下载PDF</Button>
-      <Button onClick={() => download("save").then((info) => console.log(info))}>获取PDF数据</Button>
-      <Button onClick={() => H52PDFComponent.outputImage(id).then((info) => console.log(info))}>HTML转图片</Button>
       <Button onClick={() => H52PDFComponent.outputCanvas(id).then((info) => console.log(info))}>HTML转Canvas</Button>
+      <Button onClick={() => H52PDFComponent.outputImage(id).then((info) => console.log(info))}>HTML转图片</Button>
+      <Button onClick={() => download("save").then((info) => console.log(info))}>HTML转PDF</Button>
+      <Button onClick={() => download("download").then((info) => console.log(info))}>下载PDF</Button>
     </div>
   </div>;
 };
