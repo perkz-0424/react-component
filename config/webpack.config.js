@@ -360,6 +360,31 @@ module.exports = function (webpackEnv) {
           loader: require.resolve ("source-map-loader"),
         },
         {
+          test: /\.js$/,
+          enforce: 'pre',
+          use: [
+            {
+              //needed to chain sourcemaps.  see: https://webpack.js.org/loaders/source-map-loader/
+              loader: 'source-map-loader',
+              options: {
+
+                filterSourceMappingUrl: (url, resourcePath) => {
+                  //  console.log({ url, resourcePath }) example:
+                  // {
+                  //  url: 'index.js.map',
+                  //  resourcePath: '/repos/xlib-wsl/common/temp/node_modules/.pnpm/https-proxy-agent@5.0.0/node_modules/https-proxy-agent/dist/index.js'
+                  // }
+
+                  if (/.*\/node_modules\/.*/.test(resourcePath)) {
+                    return false
+                  }
+                  return true
+                }
+
+              }
+            }],
+        },
+        {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.

@@ -1,14 +1,33 @@
-import html2canvas from "html2canvas";
 import {jsPDF} from "jspdf";
+
+const html2canvas = require("html2canvas").default;
 
 export const outputPdf = (id: string, type: string, name = "pdf文件", cb?: (info?: any) => any | undefined,) => {
   const targetPdf = document.getElementById(id) as HTMLElement;
   html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
-    canvas => compress(
+    (canvas: HTMLCanvasElement) => compress(
       canvas.toDataURL("image/jpeg", 1),
       1.1,
       (blob, w, h) => canvasToPdf(blob, w, h, type, cb, name)
     )
+  );
+};
+
+export const outputCanvas = (id: string) => {
+  const targetPdf = document.getElementById(id) as HTMLElement;
+  html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
+    (canvas: HTMLCanvasElement) => {
+
+    }
+  );
+};
+
+export const outputImage = (id: string) => {
+  const targetPdf = document.getElementById(id) as HTMLElement;
+  html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
+    (canvas: HTMLCanvasElement) => {
+
+    }
   );
 };
 //压缩图片

@@ -97,7 +97,7 @@ export const randCode = (n = Math.random() * 5) => {
       new Date().getTime() +
       Math.ceil(Math.random() * 100)
     )
-      .replace(/0/g, "z"))
-      .replace("9", "y") +
+      .replace(/0/g, "h"))
+      .replace("9", "f") +
     randAChar();
 };
