@@ -1,8 +1,17 @@
 export const namespace = "image";
+const mxxz = require("@/common/images/mxxz.jpg");
+
 const store = {
   namespace,
   state: {
-    fileList: []
+    fileList: [
+      {
+        uid: "done_mxxz",
+        name: "mxxz.jpg",
+        status: "done",
+        url: mxxz,
+      }
+    ]
   },
   reducers: {
     setFileList(state: any, {fileList}: { fileList: any[] }) {
