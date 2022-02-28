@@ -1,34 +1,32 @@
 import {jsPDF} from "jspdf";
+import html2canvas from "html2canvas";
 
-const html2canvas = require("html2canvas").default;
-
-export const outputPdf = (id: string, type: string, name = "pdf文件", cb?: (info?: any) => any | undefined,) => {
-  const targetPdf = document.getElementById(id) as HTMLElement;
-  html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
-    (canvas: HTMLCanvasElement) => compress(
-      canvas.toDataURL("image/jpeg", 1),
-      1.1,
-      (blob, w, h) => canvasToPdf(blob, w, h, type, cb, name)
-    )
-  );
+const getElement = (target: HTMLElement | string) => {
+  if (typeof target === "string") {
+    return document.getElementById(target) as HTMLElement;
+  } else {
+    return target;
+  }
+};
+export const outputPdf = async (target: HTMLElement | string, type: string, name = "pdf文件", cb?: (info?: any) => any | undefined,) => {
+  const targetPdf = getElement(target);
+  const image = await outputImage(targetPdf);
+  compress(image, 1.1, (blob, w, h) => canvasToPdf(blob, w, h, type, cb, name));
+  return image;
 };
 
-export const outputCanvas = (id: string) => {
-  const targetPdf = document.getElementById(id) as HTMLElement;
-  html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
-    (canvas: HTMLCanvasElement) => {
-
-    }
-  );
+export const outputCanvas = (target: HTMLElement | string) => {
+  return new Promise((resolve) => {
+    const targetPdf = getElement(target);
+    html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true})
+      .then((canvas: HTMLCanvasElement) => resolve(canvas));
+  });
 };
 
-export const outputImage = (id: string) => {
-  const targetPdf = document.getElementById(id) as HTMLElement;
-  html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true}).then(
-    (canvas: HTMLCanvasElement) => {
-
-    }
-  );
+export const outputImage = async (target: HTMLElement | string) => {
+  const targetPdf = getElement(target);
+  const canvas = await outputCanvas(targetPdf) as HTMLCanvasElement;
+  return canvas.toDataURL("image/jpeg", 1);
 };
 //压缩图片
 export const compress = (base64: string, rate = 1.2, callback: (base64: string, w: number, h: number) => any) => {
