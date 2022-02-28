@@ -8,16 +8,19 @@ import moment from "moment";
 const H52PDF = (): React.ReactElement => {
   const id = randCode();
   const name = `梦想小镇(${moment().format("YYYY-MM-DD")})`;
-  const download = (type: string) => new Promise((resolve) => H52PDFComponent.outputPdf(id, type, name, (info) => resolve(info)));
+  const download = React.useCallback((type: string) =>
+    new Promise((resolve) => H52PDFComponent.outputPdf(id, type, name, (info) => resolve(info))), []);
   return <div className={styles.h52PDF}>
     <H52PDFComponent id={id} className={styles.demo}>
       <div className={styles.box}>
-        梦想小镇
+        <span className={styles.colorRed}>美丽的</span>梦想小镇
       </div>
     </H52PDFComponent>
     <div className={styles.buttons}>
-      <Button onClick={() => download("download")}>下载PDF</Button>
-      <Button onClick={() => download("save")}>保存PDF</Button>
+      <Button onClick={() => download("download").then((info) => console.log(info))}>下载PDF</Button>
+      <Button onClick={() => download("save").then((info) => console.log(info))}>获取PDF数据</Button>
+      <Button onClick={() => H52PDFComponent.outputImage(id).then((info) => console.log(info))}>HTML转图片</Button>
+      <Button onClick={() => H52PDFComponent.outputCanvas(id).then((info) => console.log(info))}>HTML转Canvas</Button>
     </div>
   </div>;
 };

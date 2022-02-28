@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from "./styles.less";
-import {outputPdf, canvasToPdf, compress} from "@/component/H52PDF/action";
+import {outputPdf, canvasToPdf, compress, outputCanvas, outputImage} from "@/component/H52PDF/action";
 
 const H52PDF = (props: {
   children?: React.ReactElement | null,
@@ -14,5 +14,8 @@ const H52PDF = (props: {
 H52PDF.outputPdf = outputPdf;
 H52PDF.canvasToPdf = canvasToPdf;
 H52PDF.compress = compress;
-export {outputPdf, canvasToPdf, compress};
+H52PDF.outputCanvas = outputCanvas;
+H52PDF.outputImage = outputImage;
+
+export {outputPdf, canvasToPdf, compress, outputCanvas, outputImage};
 export default H52PDF;
