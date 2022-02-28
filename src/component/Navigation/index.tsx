@@ -10,28 +10,28 @@ interface IProps extends ReturnType<typeof mapDispatch>, ReturnType<typeof mapSt
   goTo: (path: string) => any
   className?: string,
   data?: any[],
-  readonly open?: boolean,
   path?: string,
+  readonly open?: boolean,
 }
 
 const Navigation = connect(mapState, mapDispatch)((props: IProps): React.ReactElement => {
-  const menus = props.sortMenus();
   return <div
     className={`${styles.navigation} ${props.open ? styles.open : styles.close} ${props.className ? props.className : ""}`}>
     <div className={`${styles.menus}`}>
       <div className={styles.groups}>
         <ul className={styles.group}>
-          {menus.map((i: any, index: number) => <li key={index} className={styles.level1}>
-            <span>{i.name}</span>
-            <ul className={styles.group2}>
-              {i.children.map((v: any, k: any) => <li
-                key={k}
-                className={styles.level2}
-                onClick={() => props.goTo(v.enName)}>
-                <span className={props.path === v.enName ? styles.active : ""}>{v.name}({v.path})</span>
-              </li>)}
-            </ul>
-          </li>)}
+          {props.sortMenus().map((i: { name: string, children: { enName: string, name: string }[] }, index: number) =>
+            <li key={index} className={styles.level1}>
+              <span>{i.name}</span>
+              <ul className={styles.group2}>
+                {i.children.map((v, k: number) => <li
+                  key={k}
+                  className={styles.level2}
+                  onClick={() => props.goTo(v.enName)}>
+                  <span className={props.path === v.enName ? styles.active : ""}>{v.name}({v.enName})</span>
+                </li>)}
+              </ul>
+            </li>)}
         </ul>
       </div>
     </div>

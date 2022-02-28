@@ -4,7 +4,7 @@ export default require("@/store/models").default({
   [namespace]: {
     namespace,
     state: {
-      open: true,
+      open: false,
     },
     reducers: {
       init(state: any) {
