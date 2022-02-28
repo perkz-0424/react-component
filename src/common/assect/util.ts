@@ -75,3 +75,29 @@ export const copyText = (value: string) => {
   oInput.style.display = "none";
   success("复制成功");
 };
+
+export const randAChar = () => {
+  const n = Math.random() * 10;
+  const s = String.fromCharCode(Math.floor(Math.random() * 26) + "a".charCodeAt(0));
+  if (n > 5) {
+    return s;
+  } else {
+    return (s).toUpperCase();
+  }
+};
+
+export const randCode = (n = 4) => {
+  let s = "";
+  for (let i = 0; i < n; i++) {
+    s += randAChar();
+  }
+  return ((s +
+      Math.ceil(
+        Math.random() * 100) +
+      new Date().getTime() +
+      Math.ceil(Math.random() * 100)
+    )
+      .replace(/0/g, "z"))
+      .replace("9", "y") +
+    randAChar();
+};

@@ -1,10 +1,11 @@
 import {Dispatch} from "@/definitions/type";
 import {namespace as search} from "@/component/Search/store";
+import {randCode} from "@/common/assect/util";
 
 const action = {
   mapLocal: {
     time: null as NodeJS.Timeout | null,
-    key: `${Math.ceil(Math.random() * 100)}${new Date().getTime()}${Math.ceil(Math.random() * 100)}`,
+    key: randCode(),
     getItemsBySearch(items: any[], search = "") {
       return new Promise((resolve) => {
         this.time && clearTimeout(this.time);
