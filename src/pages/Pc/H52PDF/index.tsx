@@ -4,6 +4,7 @@ import H52PDFComponent from "@/component/H52PDF";
 import {randCode} from "@/common/assect/util";
 import {Button} from "element-react";
 import moment from "moment";
+import Content from "@/component/Content";
 
 const H52PDF = (): React.ReactElement => {
   const id = randCode();
@@ -11,6 +12,7 @@ const H52PDF = (): React.ReactElement => {
   const download = React.useCallback((type: string) =>
     new Promise((resolve) => H52PDFComponent.outputPdf(id, type, name, (info) => resolve(info))), []);
   return <div className={styles.h52PDF}>
+    <Content title="H5转PDF" message="h5转canvas、h5转图片、h5转pdf"/>
     <H52PDFComponent id={id} className={styles.demo}>
       <div className={styles.box}>
         <span className={styles.colorRed}>美丽的</span>梦想小镇

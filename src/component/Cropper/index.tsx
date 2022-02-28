@@ -1,15 +1,15 @@
 import * as React from "react";
 import styles from "./styles.less";
-import {UploadOutlined} from "@ant-design/icons";
+import {UploadOutlined, LoadingOutlined} from "@ant-design/icons";
 import {randCode} from "@/common/assect/util";
-import {Button} from "antd";
 
 interface IProps {
   W?: number,
   H?: number,
   aspectRatio?: number,
   src: string,
-  onUpLoad?: (newImg?: any) => any
+  onChange?: (newImg?: any) => any
+  onOk?: (newImg?: any) => any
 }
 
 interface IMark {
@@ -47,8 +47,10 @@ interface IState {
   markBorder: IMark,
   rect: IRect,
   r: number,
+  newImg: string,
   startMark: IOption,
   startStretch: IOption,
+  loading: boolean,
 }
 
 const id = randCode();
@@ -57,6 +59,7 @@ class Cropper extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      r: 1,
       W: 618, H: 300,//页面宽高
       dataURL: "",//文件的URL
       dh: 0, dw: 0, dx: 0, dy: 0,//图片的位置
@@ -69,7 +72,8 @@ class Cropper extends React.Component<IProps, IState> {
       rect: {top: 0, right: 0, bottom: 0, left: 0,},//明亮的区域
       startMark: {x: 0, y: 0,},//移动mark初始基准值
       startStretch: {x: 0, y: 0,},//变形点点的初始基准值，
-      r: 1
+      newImg: "",
+      loading: false
     };
   }
 
@@ -78,14 +82,16 @@ class Cropper extends React.Component<IProps, IState> {
    * @param{Object}e
    * **/
   upLoadImg = (e: any) => {
-    const fileData = e.target && e.target.files && e.target.files[0] ? e.target.files[0] : null;
-    const reader = new FileReader();
-    if (fileData) {
-      reader.readAsDataURL(fileData);
-      reader.onload = () => {
-        this.getImage(reader.result as string);//读取图片base64
-      };
-    }
+    this.setState({loading: true}, () => {
+      const fileData = e.target && e.target.files && e.target.files[0] ? e.target.files[0] : null;
+      const reader = new FileReader();
+      if (fileData) {
+        reader.readAsDataURL(fileData);
+        reader.onload = () => {
+          this.getImage(reader.result as string);//读取图片base64
+        };
+      }
+    });
   };
 
   /**
@@ -135,7 +141,7 @@ class Cropper extends React.Component<IProps, IState> {
         }
         ctx.drawImage(image, dx, dy, dw, dh);
         this.setState({
-          dx, dy, dw, dh, ctx,
+          dx, dy, dw, dh, ctx
         }, () => {
           //根据图片大小和形状初始化框选的区域
           const {dx, dy, dw, dh, aspectRatio} = this.state;
@@ -395,7 +401,12 @@ class Cropper extends React.Component<IProps, IState> {
    * 导出图片
    * **/
   setNewImg = (newImg: any) => {
-    this.props.onUpLoad && this.props.onUpLoad(newImg);
+    this.setState({newImg, loading: false});
+    this.props.onChange && this.props.onChange(newImg);
+  };
+
+  onOk = () => {
+    this.props.onOk && this.props.onOk(this.state.newImg);
   };
 
   componentDidMount() {
@@ -403,11 +414,11 @@ class Cropper extends React.Component<IProps, IState> {
       W: this.props.W ? this.props.W : 618,
       H: this.props.H ? this.props.H : 300,
       aspectRatio: this.props.aspectRatio ? this.props.aspectRatio : 1,
+      loading: true,
     }, () => {
       this.getImage(this.props.src);
     });
   }
-
 
   render(): React.ReactNode {
     const {
@@ -415,7 +426,7 @@ class Cropper extends React.Component<IProps, IState> {
       markBorder,
       dataURL,
       rect,
-      H, W
+      H, W, loading
     } = this.state;
     const point = [
       {position: "LT", left: -3, top: -3},
@@ -429,48 +440,45 @@ class Cropper extends React.Component<IProps, IState> {
     ];
     return <div className={styles.cropper}>
       <div className={styles.cropper_body} style={{width: `${W}px`, height: `${H}px`}}>
+        {loading ? <div className={styles.loading}>
+          <LoadingOutlined/>
+        </div> : <></>}
         <canvas id={id}/>
         <div className={styles.baffle}/>
-        <img className={styles.head_picture} src={dataURL} alt="img"
-             style={{
-               clip: `
-                rect(
-                  ${rect.top}px,
-                  ${rect.right}px,
-                  ${rect.bottom}px,
-                  ${rect.left}px
-                )`,
-               width: `${dw}px`,
-               height: `${dh}px`,
-               left: `${dx}px`,
-               top: `${dy}px`,
-             }}/>
-        <div className={styles.mark} onMouseDown={this.markMouseDown}
-             style={{
-               width: `${markBorder.width}px`,
-               height: `${markBorder.height}px`,
-               left: `${markBorder.left}px`,
-               top: `${markBorder.top}px`,
-             }}
+        {loading ? <></> : <img
+          className={styles.head_picture}
+          src={dataURL}
+          alt="img"
+          style={{
+            clip: `rect(${rect.top}px,${rect.right}px,${rect.bottom}px,${rect.left}px)`,
+            width: `${dw}px`,
+            height: `${dh}px`,
+            left: `${dx}px`,
+            top: `${dy}px`,
+          }}
+        />}
+        {loading ? <></> : <div
+          className={styles.mark}
+          onMouseDown={this.markMouseDown}
+          style={{
+            width: `${markBorder.width}px`,
+            height: `${markBorder.height}px`,
+            left: `${markBorder.left}px`,
+            top: `${markBorder.top}px`,
+          }}
         >
-          {
-            point.map((item: {
-              position: string,
-              left: number,
-              top: number
-            }, index: number) => {
-              return (
-                <div className={`${styles.stretch} ${item.position}`} onMouseDown={this.stretchMouseDown}
-                     key={index}
-                     style={{
-                       left: `${item.left}px`,
-                       top: `${item.top}px`,
-                     }}
-                />
-              );
-            })
+          {point.map((item: { position: string, left: number, top: number }, index: number) => <div
+            className={`${styles.stretch} ${item.position}`}
+            onMouseDown={this.stretchMouseDown}
+            key={index}
+            style={{
+              left: `${item.left}px`,
+              top: `${item.top}px`,
+            }}
+          />)
           }
         </div>
+        }
       </div>
       <div className={styles.reselect_img}>
         <label htmlFor="UL_image">
@@ -478,6 +486,7 @@ class Cropper extends React.Component<IProps, IState> {
                  style={{display: "none"}} onChange={this.upLoadImg}/>
           <span className={styles.reselect_btn}><UploadOutlined/><span style={{marginLeft: "4px"}}>重新选择</span></span>
         </label>
+        <span className={styles.reselect_btn} style={{marginLeft: "4px"}} onClick={this.onOk}>确定</span>
       </div>
     </div>;
   }
