@@ -41,6 +41,11 @@ const routes = [
             Component: require("@/pages/Pc/Img").default,
             name: "图片",
             keywords: ["图片"]
+          },
+          {
+            path: "/number",
+            Component: require("@/pages/Pc/Number").default,
+            name: "数字",
           }
         ]
       },
