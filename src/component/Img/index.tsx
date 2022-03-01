@@ -5,6 +5,7 @@ interface IProps {
   src: string,
   alt?: string,
   className?: string,
+  loading?: boolean
 }
 
 const Img = (props: IProps): React.ReactElement => {
@@ -29,10 +30,11 @@ const Img = (props: IProps): React.ReactElement => {
       }
     };
     xhr.send();
-  }, []);
+    return () => xhr.abort()
+  }, [props.src]);
   return <div className={`${styles.box} ${props.className ? props.className : ""}`}>
     <img src={src} alt={props.alt} className={styles.img}/>
-    {percent !== 100 ? <div className={styles.percent}>
+    {props.loading && percent !== 100 ? <div className={styles.percent}>
       <div className={styles.percentage} style={{width: `${percent}%`}}/>
     </div> : null}
   </div>;

@@ -445,7 +445,7 @@ class Cropper extends React.Component<IProps, IState> {
         </div> : <></>}
         <canvas id={id}/>
         <div className={styles.baffle}/>
-        {loading ? <></> : <img
+        <img
           className={styles.head_picture}
           src={dataURL}
           alt="img"
@@ -456,7 +456,7 @@ class Cropper extends React.Component<IProps, IState> {
             left: `${dx}px`,
             top: `${dy}px`,
           }}
-        />}
+        />
         {loading ? <></> : <div
           className={styles.mark}
           onMouseDown={this.markMouseDown}
