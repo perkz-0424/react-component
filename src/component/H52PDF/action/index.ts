@@ -1,6 +1,7 @@
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 
+const devicePixelRatio = window.devicePixelRatio || 1;
 // 获取标签
 const getElement = (target: HTMLElement | string) => {
   if (typeof target === "string") {
@@ -22,8 +23,12 @@ export const outputPdf = async (target: HTMLElement | string, type: string, name
 export const outputCanvas = (target: HTMLElement | string) => {
   return new Promise((resolve) => {
     const targetPdf = getElement(target);
-    html2canvas(targetPdf, {imageTimeout: 3000000, useCORS: true})
-      .then((canvas: HTMLCanvasElement) => resolve(canvas));
+    console.log(targetPdf.offsetWidth, targetPdf.offsetWidth);
+    html2canvas(targetPdf, {
+      imageTimeout: 3000000,
+      useCORS: true,
+      scale: devicePixelRatio,
+    }).then((canvas: HTMLCanvasElement) => resolve(canvas));
   });
 };
 
