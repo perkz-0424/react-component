@@ -1,9 +1,9 @@
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 
-const devicePixelRatio = window.devicePixelRatio || 1;
+const devicePixelRatio = (window.devicePixelRatio || 1) * 2;
 // 获取标签
-const getElement = (target: HTMLElement | string) => {
+const getElement = (target: HTMLElement | string): HTMLElement => {
   if (typeof target === "string") {
     return document.getElementById(target) as HTMLElement;
   } else {
@@ -15,7 +15,7 @@ export const outputPdf = async (target: HTMLElement | string, type: string, name
   const targetPdf = getElement(target);
   const image = await outputImage(targetPdf);
   const {base64, w, h}: any = await compress(image, 1.1);
-  canvasToPdf(base64, w, h, type, cb, name)
+  canvasToPdf(base64, w, h, type, cb, name);
   return image;
 };
 
@@ -23,12 +23,20 @@ export const outputPdf = async (target: HTMLElement | string, type: string, name
 export const outputCanvas = (target: HTMLElement | string) => {
   return new Promise((resolve) => {
     const targetPdf = getElement(target);
-    console.log(targetPdf.offsetWidth, targetPdf.offsetWidth);
+    const width = targetPdf.offsetWidth;
+    const height = targetPdf.offsetHeight;
+    const canvas = document.createElement("canvas");
+    canvas.width = width * devicePixelRatio;
+    canvas.height = height * devicePixelRatio;
+    canvas.remove();
     html2canvas(targetPdf, {
       imageTimeout: 3000000,
       useCORS: true,
       scale: devicePixelRatio,
-    }).then((canvas: HTMLCanvasElement) => resolve(canvas));
+      width: width,
+      height: height,
+      canvas: canvas,
+    }).then(resolve);
   });
 };
 
@@ -50,8 +58,7 @@ export const compress = (base64: string, rate = 1.2) => {
       const h = img.height / rate;
       canvas.setAttribute("width", w as any);
       canvas.setAttribute("height", h as any);
-      // @ts-ignore
-      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      (canvas.getContext("2d") as CanvasRenderingContext2D).drawImage(img, 0, 0, w, h);
       const b64 = canvas.toDataURL("image/jpeg");
       canvas.toBlob(async (blob: any) => {
         if (blob.size > 1000500000) {

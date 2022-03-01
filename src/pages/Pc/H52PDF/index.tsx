@@ -17,8 +17,12 @@ const H52PDF = (): React.ReactElement => {
     });
   };
   const outputImage = () => {
-    H52PDFComponent.outputImage(id).then((info) => {
-      console.log(info);
+    H52PDFComponent.outputImage(id).then((data) => {
+      const img = new Image(450, 300);
+      img.src = data;
+      img.onload = () => {
+        divRef && divRef.current && divRef.current.appendChild(img);
+      };
     });
   };
   const savePDF = () => {
