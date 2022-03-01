@@ -35,6 +35,12 @@ const routes = [
             Component: require("@/pages/Pc/LazyPicture").default,
             name: "懒图",
             keywords: ["图片"]
+          },
+          {
+            path: "/img",
+            Component: require("@/pages/Pc/Img").default,
+            name: "图片",
+            keywords: ["图片"]
           }
         ]
       },

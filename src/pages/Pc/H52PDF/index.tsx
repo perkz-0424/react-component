@@ -5,6 +5,7 @@ import {randCode} from "@/common/assect/util";
 import {Button} from "element-react";
 import moment from "moment";
 import icon from "@/common/images/icon.png";
+import Img from "@/component/Img";
 
 const id = randCode();
 const name = `梦想小镇(${moment().format("YYYY-MM-DD")})`;
@@ -42,6 +43,10 @@ const H52PDF = (): React.ReactElement => {
     <H52PDFComponent id={id} className={styles.demo}>
       <div className={styles.box}>
         <img src={icon} alt=" "/>
+        <Img
+          src="https://quanmai-cloud.oss-cn-hangzhou.aliyuncs.com/public/20220301/16461137061646113706984/IMG_0614.JPG"
+          className={styles.img}
+        />
         <span className={styles.colorRed}>ABC</span>DEF
       </div>
     </H52PDFComponent>
