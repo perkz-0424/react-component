@@ -1,6 +1,5 @@
 import * as React from "react";
 import styles from "./styles.less";
-import Content from "@/component/Content";
 import LazyPictureComponent from "@/component/LazyPicture";
 import mxxz from "@/common/images/mxxz.jpg";
 
@@ -8,7 +7,6 @@ import mxxz from "@/common/images/mxxz.jpg";
 const LazyPicture = (): React.ReactElement => {
 
   return <div className={styles.lazyPicture}>
-    <Content title="懒图片" message="懒图片"/>
     <LazyPictureComponent
       H={375 * 1.5}//容器高
       W={500 * 1.5}//容器宽

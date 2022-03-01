@@ -49,7 +49,7 @@ export const compress = (base64: string, rate = 1.2) => {
       canvas.getContext("2d").drawImage(img, 0, 0, w, h);
       const b64 = canvas.toDataURL("image/jpeg");
       canvas.toBlob(async (blob: any) => {
-        if (blob.size > 100050000) {
+        if (blob.size > 1000500000) {
           const a: any = await compress(b64, rate);
           resolve({...a});
         } else {
