@@ -1,7 +1,7 @@
 import {jsPDF} from "jspdf";
 import html2canvas from "html2canvas";
 
-const devicePixelRatio = (window.devicePixelRatio || 1) * 2;
+const devicePixelRatio = 8;
 // 获取标签
 const getElement = (target: HTMLElement | string): HTMLElement => {
   if (typeof target === "string") {
@@ -28,7 +28,6 @@ export const outputCanvas = (target: HTMLElement | string) => {
     const canvas = document.createElement("canvas");
     canvas.width = width * devicePixelRatio;
     canvas.height = height * devicePixelRatio;
-    canvas.remove();
     html2canvas(targetPdf, {
       imageTimeout: 3000000,
       useCORS: true,

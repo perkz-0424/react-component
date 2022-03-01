@@ -27,11 +27,11 @@ const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale}: IProps)
   const _disableDoubleClick_ = disableDoubleClick !== undefined ? disableDoubleClick : false;
   const [centerPoint] = React.useState({x: W / 2, y: H / 2});//画布的中心点
   const [img, set_img] = React.useState<null | HTMLImageElement>(null);// new Image()
-  const [context, set_context] = React.useState<any>(null);// ctx
-  const [imageWH, set_imageWH] = React.useState({w: 0, h: 0});//图的大小
-  const [imageXY, set_imageXY] = React.useState({x: 0, y: 0});//图的位置
-  const [doubleClicking, set_doubleClicking] = React.useState(false);//正在执行双击事件
-  const [displayLine, set_displayLine] = React.useState(false);//是否出现画线
+  const [context, set_context] = React.useState<null | CanvasRenderingContext2D>(null);// ctx
+  const [imageWH, set_imageWH] = React.useState<{w: number, h:number}>({w: 0, h: 0});//图的大小
+  const [imageXY, set_imageXY] = React.useState<{x: number, y:number}>({x: 0, y: 0});//图的位置
+  const [doubleClicking, set_doubleClicking] = React.useState<boolean>(false);//正在执行双击事件
+  const [displayLine, set_displayLine] = React.useState<boolean>(false);//是否出现画线
 
   //加载图片
   const upLoadImg = (src: string) => {
@@ -66,8 +66,8 @@ const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale}: IProps)
 
   //画图（图片、位置、大小、比列）
   const drawImage = (image: HTMLImageElement, x: number, y: number, w: number, h: number, sx: number, sy: number) => {
-    context.scale(sx, sy);//比例
-    context.drawImage(image, x, y, w, h);//绘制图形
+    (context as CanvasRenderingContext2D).scale(sx, sy);//比例
+    (context as CanvasRenderingContext2D).drawImage(image, x, y, w, h);//绘制图形
   };
 
   //画标尺

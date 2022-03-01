@@ -1,15 +1,15 @@
 export const namespace = "image";
-const mxxz = require("@/common/images/mxxz.jpg");
+const icon = require("@/common/images/icon.png");
 
 const store = {
   namespace,
   state: {
     fileList: [
       {
-        uid: "done_mxxz",
-        name: "mxxz.jpg",
+        uid: "done_icon",
+        name: "icon.jpg",
         status: "done",
-        url: mxxz,
+        url: icon,
       }
     ]
   },

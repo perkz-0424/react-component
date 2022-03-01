@@ -4,6 +4,7 @@ import H52PDFComponent from "@/component/H52PDF";
 import {randCode} from "@/common/assect/util";
 import {Button} from "element-react";
 import moment from "moment";
+import icon from "@/common/images/icon.png";
 
 const id = randCode();
 const name = `梦想小镇(${moment().format("YYYY-MM-DD")})`;
@@ -13,7 +14,7 @@ const H52PDF = (): React.ReactElement => {
     new Promise((resolve) => H52PDFComponent.outputPdf(id, type, name, (info) => resolve(info))), []);
   const outputCanvas = () => {
     H52PDFComponent.outputCanvas(id).then((canvas) => {
-      divRef && divRef.current && divRef.current.appendChild(canvas as HTMLCanvasElement);
+      console.log(canvas);
     });
   };
   const outputImage = () => {
@@ -40,7 +41,8 @@ const H52PDF = (): React.ReactElement => {
   return <div className={styles.h52PDF}>
     <H52PDFComponent id={id} className={styles.demo}>
       <div className={styles.box}>
-        <span className={styles.colorRed}>美丽的</span>梦想小镇
+        <img src={icon} alt=" "/>
+        <span className={styles.colorRed}>ABC</span>DEF
       </div>
     </H52PDFComponent>
     <div className={styles.buttons}>
