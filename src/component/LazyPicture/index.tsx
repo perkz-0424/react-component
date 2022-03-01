@@ -9,8 +9,6 @@ interface IProps {
   maxMul: number,
   disableDoubleClick?: boolean,
   haveScale?: boolean,
-  onMouseOver?: () => any,
-  onMouseOut?: () => any,
 }
 
 let _scale_ = 1; //放大或缩小的倍数
@@ -18,7 +16,7 @@ const size = 15;//初始刻度尺寸
 const _singleScale_ = 1.040645141;//单次缩放比1.008的5次方
 const _devicePixelRatio_ = window.devicePixelRatio || 1;//设备px
 const maxMules = [1.000000000, 2.048556233, 2.932053124, 4.032674037, 4.921601225, 6.006475703, 7.044178733, 7.938498160, 8.946359176, 10.08217687];//1.008为基准的1-10倍
-const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale, onMouseOut, onMouseOver}: IProps): React.ReactElement => {
+const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale}: IProps): React.ReactElement => {
   const canvasRef = React.useRef(null);
   const timingDevice: { keyframe: null | NodeJS.Timer, animation: null | NodeJS.Timer } = {
     keyframe: null,
@@ -139,7 +137,6 @@ const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale, onMouseO
   //定位数据信息
   //TODO:定位信息
   const drawPositionInfo = (x: number, y: number) => {
-
   };
 
   const clearCtx = () => {
@@ -346,7 +343,23 @@ const LazyPicture = ({W, H, src, maxMul, disableDoubleClick, haveScale, onMouseO
       leaveLazyPicture();
     };
   }, [src]);
-  return <div className={styles.lazy_picture} style={{width: imageWH.w, height: imageWH.h}} onMouseOut={onMouseOut} onMouseOver={onMouseOver}>
+
+  const preventDefault = React.useCallback((e: any) => {
+    e.preventDefault();
+  }, []);
+
+  const onMouseOver = () => {
+    document.addEventListener("wheel", preventDefault, {passive: false})
+  }
+
+  const onMouseOut = () => {
+    document.removeEventListener("wheel", preventDefault, false)
+  }
+  return <div
+    className={styles.lazy_picture}
+    style={{width: imageWH.w, height: imageWH.h}}
+    onMouseOut={onMouseOut}
+    onMouseOver={onMouseOver}>
     <div className={styles.lazy_picture_box}>
       <canvas
         ref={canvasRef}

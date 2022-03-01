@@ -468,7 +468,7 @@ class Cropper extends React.Component<IProps, IState> {
           }}
         >
           {point.map((item: { position: string, left: number, top: number }, index: number) => <div
-            className={`${styles.stretch} ${item.position}`}
+            className={`${styles.stretch} ${item.position} ${styles[item.position]}`}
             onMouseDown={this.stretchMouseDown}
             key={index}
             style={{
