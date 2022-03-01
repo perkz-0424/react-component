@@ -49,7 +49,8 @@ const Image = (props: {
       <Upload
         disabled={disabled}
         listType="picture-card"
-        fileList={fileList.map((i: any) => ({
+        fileList={
+          fileList.map((i: any) => ({
           ...i,
           response: i.name,
           status: "done"
