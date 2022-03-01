@@ -4,8 +4,7 @@
     width: 450px;
     height: 300px;
     box-sizing: border-box;
-    background: url("../../../common/images/icon.png") 50%;
-    background-size: 30px auto;
+    overflow: hidden;
 
     .box {
       width: 100%;
@@ -14,12 +13,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #261c1c;
-      padding-right: 10px;
+      color: #ffffff;
+      position: relative;
+      font-size: 40px;
 
-      .colorRed {
-        color: #b3370b;
-        font-size: 20px;
+      .img {
+        width: 450px;
+      }
+
+      .font {
+        position: absolute;
+
+        .colorRed {
+          color: #b3370b;
+          font-size: 20px;
+        }
       }
     }
   }
@@ -28,8 +36,4 @@
     display: flex;
     margin: 10px 0;
   }
-}
-.img{
-  width: 100px;
-
 }
