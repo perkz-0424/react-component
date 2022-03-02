@@ -292,63 +292,80 @@ class Cropper extends React.Component<IProps, IState> {
 
   moveStretch = (startStretch: IOption, nowStretch: IOption, point: string) => {
     const {dx, dy, dw, dh, markBorder} = this.state;
-    const border = JSON.parse(JSON.stringify(this.state.markBorder));
+    const border = JSON.parse(JSON.stringify(markBorder));
     const rect = JSON.parse(JSON.stringify(this.state.rect));
     let y = 0;//真实差
     let dex = 0;//x的移动值和等比下的x值的差值
-    if (point === "LT" || point === "RT") {
-      y = this.getCriticalValue(nowStretch.y - startStretch.y, markBorder.height - 5, dy - markBorder.top);//y边界值
-      dex = (border.height - y) / this.state.aspectRatio - border.width;
-    } else if (point === "LB" || point === "RB") {
-      y = this.getCriticalValue(nowStretch.y - startStretch.y, (dy + dh) - (markBorder.height + markBorder.top), -markBorder.height);
-      dex = (border.height + y) / this.state.aspectRatio - border.width;
-    }
     switch (point) {
       case "LT":
-        //以y边为基准，实现等比例,x边界
-        if (dex <= markBorder.left - dx && dex >= 5 - markBorder.width) {
-          border.height = border.height - y;
-          border.top = border.top + y;
-          rect.top = rect.top + y;
-          border.width = border.height / this.state.aspectRatio;
-          border.left = border.left - dex;
-          rect.left = rect.left - dex;
-        }
-        break;
       case "RT":
-        if (dex <= (dx + dw) - (markBorder.left + markBorder.width) && dex >= -markBorder.width + 5) {
-          border.height = border.height - y;
-          border.top = border.top + y;
-          rect.top = rect.top + y;
-          border.width = border.height / this.state.aspectRatio;
-          rect.right = rect.right + dex;
-        }
-        break;
-      case "RB":
-        if (dex >= 5 - markBorder.width && dex <= (dx + dw) - (markBorder.left + markBorder.width)) {
-          border.height = border.height + y;
-          rect.bottom = rect.bottom + y;
-          border.width = border.height / this.state.aspectRatio;
-          rect.right = rect.right + dex;
-        }
+        y = this.getCriticalValue(nowStretch.y - startStretch.y, markBorder.height - 5, dy - markBorder.top);//y边界值
+        dex = (border.height - y) / this.state.aspectRatio - border.width;
         break;
       case "LB":
-        if (dex >= 5 - markBorder.width && dex <= markBorder.left - dx) {
-          border.height = border.height + y;
-          rect.bottom = rect.bottom + y;
-          border.width = border.height / this.state.aspectRatio;
-          border.left = border.left - dex;
-          rect.left = rect.left - dex;
-        }
+      case "RB":
+        y = this.getCriticalValue(nowStretch.y - startStretch.y, (dy + dh) - (markBorder.height + markBorder.top), -markBorder.height);
+        dex = (border.height + y) / this.state.aspectRatio - border.width;
         break;
       default:
         break;
     }
-    this.setState({
-      startStretch: nowStretch,
-    }, () => {
-      this.setBorder(border, rect);
-    });
+    const rectR = (type: string) => {
+      switch (type) {
+        case "+":
+          rect.right = rect.right + dex;
+          break;
+        case "-":
+          border.left = border.left - dex;
+          rect.left = rect.left - dex;
+          break;
+        default:
+          break;
+      }
+    };
+    const borderH = (p: string) => {
+      switch (p) {
+        case "T":
+          border.height = border.height - y;
+          border.top = border.top + y;
+          rect.top = rect.top + y;
+          break;
+        case "B":
+          border.height = border.height + y;
+          rect.bottom = rect.bottom + y;
+          break;
+        default:
+          break;
+      }
+      border.width = border.height / this.state.aspectRatio;
+    };
+    const pointT = (type: string) => {
+      borderH("T");
+      rectR(type);
+    };
+    const pointB = (type: string) => {
+      borderH("B");
+      rectR(type);
+    };
+
+    switch (point) {
+      case "LT":
+        //以y边为基准，实现等比例,x边界
+        (dex <= markBorder.left - dx && dex >= 5 - markBorder.width) && pointT("-");
+        break;
+      case "RT":
+        (dex <= (dx + dw) - (markBorder.left + markBorder.width) && dex >= -markBorder.width + 5) && pointT("+");
+        break;
+      case "RB":
+        (dex >= 5 - markBorder.width && dex <= (dx + dw) - (markBorder.left + markBorder.width)) && pointB("+");
+        break;
+      case "LB":
+        (dex >= 5 - markBorder.width && dex <= markBorder.left - dx) && pointB("-");
+        break;
+      default:
+        break;
+    }
+    this.setState({startStretch: nowStretch}, () => this.setBorder(border, rect));
   };
 
   /**
