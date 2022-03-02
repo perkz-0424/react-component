@@ -1,5 +1,6 @@
 import * as React from "react";
 import styles from "./styles.less";
+import {getBase64} from "@/common/assect/util";
 
 interface IProps {
   src: string,
@@ -19,14 +20,10 @@ const Img = (props: IProps): React.ReactElement => {
     xhr.addEventListener("progress", (e) => {
       set_percent(parseInt((e.loaded * 100 / e.total).toFixed(2)));
     }, false);
-    xhr.onload = (a) => {
+    xhr.onloadend = () => {
       if (xhr.status == 200) {
         const blob = xhr.response;
-        const oFileReader = new FileReader();
-        oFileReader.readAsDataURL(blob);
-        oFileReader.onloadend = (e: any) => {
-          set_src(e.target.result);
-        };
+        blob && getBase64(blob).then((data) => set_src(data as string));
       }
     };
     xhr.send();

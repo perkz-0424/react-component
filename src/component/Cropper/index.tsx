@@ -87,7 +87,7 @@ class Cropper extends React.Component<IProps, IState> {
    * 读取上传的图片
    * **/
   upLoadNewImg = (e: any) => {
-    this.setState({loading: true}, () => {
+    !this.state.loading && this.setState({loading: true}, () => {
       const blob = e.target && e.target.files && e.target.files[0] ? e.target.files[0] : null;
       blob && getBase64(blob).then(this.getImage);
     });
@@ -98,7 +98,7 @@ class Cropper extends React.Component<IProps, IState> {
     this.xhr = new XMLHttpRequest();
     this.xhr.open("get", src, true);
     this.xhr.responseType = "blob";
-    this.xhr.onload = () => {
+    this.xhr.onloadend = () => {
       if (this.xhr && this.xhr.status == 200) {
         const blob = this.xhr.response;
         blob && getBase64(blob).then(this.getImage);
@@ -106,6 +106,10 @@ class Cropper extends React.Component<IProps, IState> {
     };
     this.xhr.send();
   };
+
+  componentWillUnmount() {
+    this.xhr && this.xhr.abort();
+  }
 
   /**
    * 获取照片并绘制canvas图片
@@ -423,10 +427,10 @@ class Cropper extends React.Component<IProps, IState> {
     }, 700);
   };
 
-  onOk = () => this.props.onOk && this.props.onOk(this.state.newImg);
+  onOk = () => !this.state.loading && this.props.onOk && this.props.onOk(this.state.newImg);
 
   componentDidMount() {
-    this.setState({loading: true}, () => this.upLoadImg(this.props.src));
+    this.upLoadImg(this.props.src);
   }
 
   renderPosition = () => {
@@ -493,10 +497,18 @@ class Cropper extends React.Component<IProps, IState> {
       <div className={styles.reselect_img}>
         <label htmlFor="UL_image">
           <input type="file" name="UL_image" id="UL_image" accept=".png, .jpg, .jpeg, .gif, .bnp" multiple
-                 style={{display: "none"}} onChange={this.upLoadNewImg}/>
-          <span className={styles.reselect_btn}><UploadOutlined/><span style={{marginLeft: "4px"}}>重新选择</span></span>
+                 style={{display: "none"}} onChange={this.upLoadNewImg} disabled={loading}/>
+          <span
+            className={`${styles.reselect_btn} ${loading ? styles.loaded : ""}`}
+          >
+            <UploadOutlined/>
+            <span style={{marginLeft: "4px"}}>重新选择</span>
+          </span>
         </label>
-        <span className={styles.reselect_btn} style={{marginLeft: "4px"}} onClick={this.onOk}>确定</span>
+        <span
+          className={`${styles.reselect_btn} ${loading ? styles.loaded : ""}`}
+          style={{marginLeft: "4px"}}
+          onClick={this.onOk}>确定</span>
       </div>
     </div>;
   }

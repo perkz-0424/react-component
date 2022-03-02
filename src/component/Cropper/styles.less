@@ -27,7 +27,7 @@
       position: absolute;
       z-index: 4;
       background-color: rgba(0, 0, 0, 0);
-      border: 1px dotted #4569d4;
+      border: 1px dashed #4569d4;
       box-sizing: border-box;
 
       .stretch {
@@ -62,6 +62,8 @@
 
   .reselect_img {
     margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
 
     .reselect_btn {
       color: #fff;
@@ -80,8 +82,13 @@
     }
 
     .reselect_btn:hover {
-      background: #52a2dc;
-      transition: background 0.2s linear 50ms;
+      background: #88c0e8;
+    }
+
+    .loaded {
+      transition: none;
+      background: #88c0e8;
+      cursor: auto;
     }
   }
 }

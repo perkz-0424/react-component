@@ -9,7 +9,7 @@ import Img from "@/component/Img";
 const id = randCode();
 const name = `梦想小镇(${moment().format("YYYY-MM-DD")})`;
 const H52PDF = (): React.ReactElement => {
-  const [loading, set_loading] = React.useState(false)
+  const [loading, set_loading] = React.useState(false);
   const divRef = React.useRef<HTMLDivElement | null>(null);
   const download = React.useCallback((type: string) =>
     new Promise((resolve) => H52PDFComponent.outputPdf(id, type, name, (info) => resolve(info))), []);
@@ -60,10 +60,10 @@ const H52PDF = (): React.ReactElement => {
       </div>
     </H52PDFComponent>
     <div className={styles.buttons}>
-      <Button onClick={outputCanvas} loading={loading}>HTML转Canvas</Button>
-      <Button onClick={outputImage} loading={loading}>HTML转图片</Button>
-      <Button onClick={savePDF} loading={loading}>HTML转PDF</Button>
-      <Button onClick={downloadPDF} loading={loading}>下载PDF</Button>
+      <Button onClick={outputCanvas} disabled={loading}>HTML转Canvas</Button>
+      <Button onClick={outputImage} disabled={loading}>HTML转图片</Button>
+      <Button onClick={savePDF} disabled={loading}>HTML转PDF</Button>
+      <Button onClick={downloadPDF} disabled={loading}>下载PDF</Button>
     </div>
     <div ref={divRef}/>
   </div>;
