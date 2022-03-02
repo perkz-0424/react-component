@@ -21,7 +21,7 @@ const Img = (props: IProps): React.ReactElement => {
       set_percent(parseInt((e.loaded * 100 / e.total).toFixed(2)));
     }, false);
     xhr.onloadend = () => {
-      if (xhr.status == 200) {
+      if (xhr.status === 200) {
         const blob = xhr.response;
         blob && getBase64(blob).then((data) => set_src(data as string));
       }

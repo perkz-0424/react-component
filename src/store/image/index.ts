@@ -1,5 +1,5 @@
 export const namespace = "image";
-const icon = require("@/common/images/icon.png");
+const icon = require("@/common/images/mxxz.jpg");
 
 const store = {
   namespace,

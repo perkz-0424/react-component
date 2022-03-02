@@ -99,7 +99,7 @@ class Cropper extends React.Component<IProps, IState> {
     this.xhr.open("get", src, true);
     this.xhr.responseType = "blob";
     this.xhr.onloadend = () => {
-      if (this.xhr && this.xhr.status == 200) {
+      if (this.xhr && this.xhr.status === 200) {
         const blob = this.xhr.response;
         blob && getBase64(blob).then(this.getImage);
       }
@@ -465,6 +465,7 @@ class Cropper extends React.Component<IProps, IState> {
 
   render(): React.ReactNode {
     const {dataURL, H, W, loading} = this.state;
+    const {src} = this.props;
     const {point, rectStyle, markStyle} = this.renderPosition();
     return <div className={styles.cropper}>
       <div className={styles.cropper_body} style={{width: `${W}px`, height: `${H}px`}}>
@@ -479,7 +480,7 @@ class Cropper extends React.Component<IProps, IState> {
           alt="img"
           style={rectStyle}
         />
-        {loading ? <></> : <div
+        {loading || !src ? <></> : <div
           className={styles.mark}
           onMouseDown={this.markMouseDown}
           style={markStyle}
@@ -491,8 +492,7 @@ class Cropper extends React.Component<IProps, IState> {
             style={{left: `${item.left}px`, top: `${item.top}px`}}
           />)
           }
-        </div>
-        }
+        </div>}
       </div>
       <div className={styles.reselect_img}>
         <label htmlFor="UL_image">
