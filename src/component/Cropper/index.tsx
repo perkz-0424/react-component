@@ -56,18 +56,21 @@ interface IState {
 const id = randCode();
 
 class Cropper extends React.Component<IProps, IState> {
+  public time: null | NodeJS.Timeout;
+
   constructor(props: IProps) {
     super(props);
     this.state = {
       r: 1,
-      W: 618, H: 300,//页面宽高
-      dataURL: "",//文件的URL
+      W: props.W ? props.W : 618,
+      H: props.H ? props.H : 300,//页面宽高
+      dataURL: props.src,//文件的URL
       dh: 0, dw: 0, dx: 0, dy: 0,//图片的位置
       ctx: null,//当前画布
       isCrop: true,//是否裁剪图片
       isMoveMark: false,//是否开始移动mark
       isMoveStretch: false,//是否拖拽点
-      aspectRatio: 1,//被选区域高宽比
+      aspectRatio: props.aspectRatio ? props.aspectRatio : 1,//被选区域高宽比
       markBorder: {width: 0, height: 0, left: 0, top: 0,},//边框大小
       rect: {top: 0, right: 0, bottom: 0, left: 0,},//明亮的区域
       startMark: {x: 0, y: 0,},//移动mark初始基准值
@@ -75,11 +78,11 @@ class Cropper extends React.Component<IProps, IState> {
       newImg: "",
       loading: false
     };
+    this.time = null;
   }
 
   /**
    * 读取上传的图片
-   * @param{Object}e
    * **/
   upLoadImg = (e: any) => {
     this.setState({loading: true}, () => {
@@ -96,11 +99,10 @@ class Cropper extends React.Component<IProps, IState> {
 
   /**
    * 获取照片并绘制canvas图片
-   * @param{string}dataURL
    * **/
   getImage = (dataURL: string) => {
     this.setState({
-      dataURL,
+      dataURL
     }, () => {
       const canvas = document.querySelector(`#${id}`) as HTMLCanvasElement;
       const image = new Image();
@@ -170,8 +172,6 @@ class Cropper extends React.Component<IProps, IState> {
   };
   /**
    * 初始化或改变边框、明亮区域
-   * @param{Object}markBorder
-   * @param{Object}rect
    * **/
   setBorder = (markBorder: IMark, rect: IRect) => {
     //设置显示区域的明亮大小
@@ -235,9 +235,7 @@ class Cropper extends React.Component<IProps, IState> {
       };
     });
   };
-  /**
-   * @param{Object}movingDistance
-   * **/
+
   moveMark = (movingDistance: IOption) => {
     const border = JSON.parse(JSON.stringify(this.state.markBorder));
     const rect = JSON.parse(JSON.stringify(this.state.rect));
@@ -292,11 +290,6 @@ class Cropper extends React.Component<IProps, IState> {
     });
   };
 
-  /**
-   * @param{Object}startStretch
-   * @param{Object}nowStretch
-   * @param{string}point
-   * **/
   moveStretch = (startStretch: IOption, nowStretch: IOption, point: string) => {
     const {dx, dy, dw, dh, markBorder} = this.state;
     const border = JSON.parse(JSON.stringify(this.state.markBorder));
@@ -360,10 +353,6 @@ class Cropper extends React.Component<IProps, IState> {
 
   /**
    * 边界值函数 target>=max return max, target <=min return min, return target
-   * @param{number}target
-   * @param{number}max
-   * @param{number}min
-   * @return{number}
    * **/
   getCriticalValue = (target: number, max: number, min: number) => {
     if (target <= min) {
@@ -377,7 +366,6 @@ class Cropper extends React.Component<IProps, IState> {
 
   /**
    * 裁剪图片
-   * @param{Object}markBorder
    * **/
   cropPicture = (markBorder: {
     left: number,
@@ -401,8 +389,13 @@ class Cropper extends React.Component<IProps, IState> {
    * 导出图片
    * **/
   setNewImg = (newImg: any) => {
-    this.setState({newImg, loading: false});
+    this.setState({newImg});
     this.props.onChange && this.props.onChange(newImg);
+    this.time && clearTimeout(this.time);
+    this.time = setTimeout(() => {
+      this.setState({loading: false});
+      this.time && clearTimeout(this.time);
+    }, 700);
   };
 
   onOk = () => {
@@ -410,12 +403,7 @@ class Cropper extends React.Component<IProps, IState> {
   };
 
   componentDidMount() {
-    this.setState({
-      W: this.props.W ? this.props.W : 618,
-      H: this.props.H ? this.props.H : 300,
-      aspectRatio: this.props.aspectRatio ? this.props.aspectRatio : 1,
-      loading: true,
-    }, () => {
+    this.setState({loading: true}, () => {
       this.getImage(this.props.src);
     });
   }
@@ -459,7 +447,7 @@ class Cropper extends React.Component<IProps, IState> {
           <LoadingOutlined/>
         </div> : <></>}
         <canvas id={id}/>
-        <div className={styles.baffle}/>
+        {loading ? <></> : <div className={styles.baffle}/>}
         <img
           className={styles.head_picture}
           src={dataURL}
