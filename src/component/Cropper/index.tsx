@@ -420,24 +420,39 @@ class Cropper extends React.Component<IProps, IState> {
     });
   }
 
+  renderPosition = () => {
+    const {markBorder, dh, dw, dx, dy, rect} = this.state;
+    const {width, height, left, top} = markBorder;
+    return {
+      point: [
+        {position: "LT", left: -3, top: -3},
+        {position: "T", left: width / 2 - 3, top: -3},
+        {position: "RT", left: width - 4, top: -3},
+        {position: "R", left: width - 4, top: height / 2 - 3},
+        {position: "RB", left: width - 4, top: markBorder.height - 4},
+        {position: "B", left: width / 2 - 3, top: height - 4},
+        {position: "LB", left: -3, top: height - 4},
+        {position: "L", left: -3, top: height / 2 - 3},
+      ],
+      rectStyle: {
+        clip: `rect(${rect.top}px,${rect.right}px,${rect.bottom}px,${rect.left}px)`,
+        width: `${dw}px`,
+        height: `${dh}px`,
+        left: `${dx}px`,
+        top: `${dy}px`,
+      },
+      markStyle: {
+        width: `${width}px`,
+        height: `${height}px`,
+        left: `${left}px`,
+        top: `${top}px`,
+      }
+    };
+  };
+
   render(): React.ReactNode {
-    const {
-      dh, dw, dx, dy,
-      markBorder,
-      dataURL,
-      rect,
-      H, W, loading
-    } = this.state;
-    const point = [
-      {position: "LT", left: -3, top: -3},
-      {position: "T", left: markBorder.width / 2 - 3, top: -3},
-      {position: "RT", left: markBorder.width - 4, top: -3},
-      {position: "R", left: markBorder.width - 4, top: markBorder.height / 2 - 3},
-      {position: "RB", left: markBorder.width - 4, top: markBorder.height - 4},
-      {position: "B", left: markBorder.width / 2 - 3, top: markBorder.height - 4},
-      {position: "LB", left: -3, top: markBorder.height - 4},
-      {position: "L", left: -3, top: markBorder.height / 2 - 3},
-    ];
+    const {dataURL, H, W, loading} = this.state;
+    const {point, rectStyle, markStyle} = this.renderPosition();
     return <div className={styles.cropper}>
       <div className={styles.cropper_body} style={{width: `${W}px`, height: `${H}px`}}>
         {loading ? <div className={styles.loading}>
@@ -449,32 +464,18 @@ class Cropper extends React.Component<IProps, IState> {
           className={styles.head_picture}
           src={dataURL}
           alt="img"
-          style={{
-            clip: `rect(${rect.top}px,${rect.right}px,${rect.bottom}px,${rect.left}px)`,
-            width: `${dw}px`,
-            height: `${dh}px`,
-            left: `${dx}px`,
-            top: `${dy}px`,
-          }}
+          style={rectStyle}
         />
         {loading ? <></> : <div
           className={styles.mark}
           onMouseDown={this.markMouseDown}
-          style={{
-            width: `${markBorder.width}px`,
-            height: `${markBorder.height}px`,
-            left: `${markBorder.left}px`,
-            top: `${markBorder.top}px`,
-          }}
+          style={markStyle}
         >
           {point.map((item: { position: string, left: number, top: number }, index: number) => <div
             className={`${styles.stretch} ${item.position} ${styles[item.position]}`}
             onMouseDown={this.stretchMouseDown}
             key={index}
-            style={{
-              left: `${item.left}px`,
-              top: `${item.top}px`,
-            }}
+            style={{left: `${item.left}px`, top: `${item.top}px`}}
           />)
           }
         </div>
@@ -493,4 +494,5 @@ class Cropper extends React.Component<IProps, IState> {
 }
 
 export default (props: IProps) => <div key={props.src} style={{width: `${props.W}px`, height: "auto"}}>
-  <Cropper {...props}/></div>;
+  <Cropper {...props}/>
+</div>;

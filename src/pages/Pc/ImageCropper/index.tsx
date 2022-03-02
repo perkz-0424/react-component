@@ -13,6 +13,7 @@ const ImageCropper = (): React.ReactElement => {
       {src ? <img alt=" " src={src}/> : "+"}
     </div>
     <Dialog
+      title="截取图片"
       visible={visible}
       className={styles.dia}
       onCancel={() => set_visible(false)}
