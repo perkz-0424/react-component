@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./styles.less";
 import {UploadOutlined, LoadingOutlined} from "@ant-design/icons";
-import {randCode} from "@/common/assect/util";
+import {randCode, getBase64} from "@/common/assect/util";
 
 interface IProps {
   W?: number,
@@ -57,6 +57,7 @@ const id = randCode();
 
 class Cropper extends React.Component<IProps, IState> {
   public time: null | NodeJS.Timeout;
+  public xhr: null | XMLHttpRequest;
 
   constructor(props: IProps) {
     super(props);
@@ -79,31 +80,38 @@ class Cropper extends React.Component<IProps, IState> {
       loading: false
     };
     this.time = null;
+    this.xhr = null;
   }
 
   /**
    * 读取上传的图片
    * **/
-  upLoadImg = (e: any) => {
+  upLoadNewImg = (e: any) => {
     this.setState({loading: true}, () => {
-      const fileData = e.target && e.target.files && e.target.files[0] ? e.target.files[0] : null;
-      const reader = new FileReader();
-      if (fileData) {
-        reader.readAsDataURL(fileData);
-        reader.onload = () => {
-          this.getImage(reader.result as string);//读取图片base64
-        };
-      }
+      const blob = e.target && e.target.files && e.target.files[0] ? e.target.files[0] : null;
+      blob && getBase64(blob).then(this.getImage);
     });
+  };
+
+
+  upLoadImg = (src: string) => {
+    this.xhr = new XMLHttpRequest();
+    this.xhr.open("get", src, true);
+    this.xhr.responseType = "blob";
+    this.xhr.onload = () => {
+      if (this.xhr && this.xhr.status == 200) {
+        const blob = this.xhr.response;
+        blob && getBase64(blob).then(this.getImage);
+      }
+    };
+    this.xhr.send();
   };
 
   /**
    * 获取照片并绘制canvas图片
    * **/
-  getImage = (dataURL: string) => {
-    this.setState({
-      dataURL
-    }, () => {
+  getImage = (dataURL: any): any => {
+    this.setState({dataURL}, () => {
       const canvas = document.querySelector(`#${id}`) as HTMLCanvasElement;
       const image = new Image();
       const ctx: any = canvas.getContext("2d");
@@ -415,14 +423,10 @@ class Cropper extends React.Component<IProps, IState> {
     }, 700);
   };
 
-  onOk = () => {
-    this.props.onOk && this.props.onOk(this.state.newImg);
-  };
+  onOk = () => this.props.onOk && this.props.onOk(this.state.newImg);
 
   componentDidMount() {
-    this.setState({loading: true}, () => {
-      this.getImage(this.props.src);
-    });
+    this.setState({loading: true}, () => this.upLoadImg(this.props.src));
   }
 
   renderPosition = () => {
@@ -489,7 +493,7 @@ class Cropper extends React.Component<IProps, IState> {
       <div className={styles.reselect_img}>
         <label htmlFor="UL_image">
           <input type="file" name="UL_image" id="UL_image" accept=".png, .jpg, .jpeg, .gif, .bnp" multiple
-                 style={{display: "none"}} onChange={this.upLoadImg}/>
+                 style={{display: "none"}} onChange={this.upLoadNewImg}/>
           <span className={styles.reselect_btn}><UploadOutlined/><span style={{marginLeft: "4px"}}>重新选择</span></span>
         </label>
         <span className={styles.reselect_btn} style={{marginLeft: "4px"}} onClick={this.onOk}>确定</span>
