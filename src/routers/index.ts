@@ -45,8 +45,14 @@ const routes = [
           {
             path: "/number",
             Component: require("@/pages/Pc/Number").default,
-            name: "数字",
-          }
+            name: "动态数字",
+          },
+          {
+            path: "/verification",
+            Component: require("@/pages/Pc/Verification").default,
+            name: "验证码",
+            keywords: ["输入框"]
+          },
         ]
       },
       {
