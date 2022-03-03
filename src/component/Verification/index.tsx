@@ -16,12 +16,9 @@ const Verification = (props: IProps) => {
   const [value, set_value] = React.useState<[...any]>(array);
   const [focus, set_focus] = React.useState<number>(props.value ? props.value.length : 0);
   const onChange = (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined, index: number) => {
-    console.log(e, value[index])
     if (e) {
-      const last = `${e}`.length - 1;
-      const lastValue = `${e}`[last];
       const v = [...value];
-      v[index] = lastValue;
+      v[index] = (e as any).replace(value[index], "");
       props.onChange && props.onChange((v.filter(i => i)).join(""));
       onChangeFocus(index, true, v);
     }
@@ -83,7 +80,7 @@ const Verification = (props: IProps) => {
         value={value[index]}
         max={1}
         key={index}
-        className={`${props.id} ${styles.input}`}
+        className={`${props.id} ${styles.input} ${focus === index ? styles.input_f : "no_input_f"}`}
         onChange={(e) => onChange(e, index)}
         onFocus={(e) => onFocus(e, index)}
       />;

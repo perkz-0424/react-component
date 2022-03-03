@@ -1,18 +1,36 @@
+@keyframes theanimation {
+  from {
+    border-color: #4569d4
+  }
+  to {
+    border-color: #bfcbd9
+  }
+}
+
 .verification {
   display: flex;
   flex-wrap: nowrap;
   padding: 5px;
   box-sizing: border-box;
 
+  .input_f {
+    animation: theanimation 0.5s infinite alternate;
+  }
+
   .input {
     width: 35px;
     margin-right: 5px;
+    border-radius: 3px;
+    border: 1px solid #bfcbd9;
 
     & :global {
+
       .el-input__inner {
         text-align: center;
         font-size: 16px;
-        //caret-color: transparent;
+        color: #747d84;
+        caret-color: transparent;
+        border: none;
       }
     }
   }
