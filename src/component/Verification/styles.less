@@ -1,4 +1,6 @@
-@keyframes theanimation {
+@import "../../../src/common/style/common";
+
+@keyframes t {
   from {
     border-color: #4569d4
   }
@@ -13,25 +15,27 @@
   padding: 5px;
   box-sizing: border-box;
 
-  .input_f {
-    animation: theanimation 0.5s infinite alternate;
-  }
-
   .input {
     width: 35px;
     margin-right: 5px;
+    line-height: 35px;
+    text-align: center;
+    font-size: 16px;
+    color: #747d84;
+    caret-color: transparent;
+    border: 1.3px solid #bfcbd9;
+    outline: none;
+    height: 35px;
     border-radius: 3px;
-    border: 1px solid #bfcbd9;
+    transition: @primary-transition;
+    box-sizing: border-box;
 
-    & :global {
+    &:focus {
+      animation: t 0.5s infinite alternate;
+    }
 
-      .el-input__inner {
-        text-align: center;
-        font-size: 16px;
-        color: #747d84;
-        caret-color: transparent;
-        border: none;
-      }
+    &:hover {
+      border-color: #b0bac7
     }
   }
 }

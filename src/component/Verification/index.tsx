@@ -1,6 +1,5 @@
 import * as React from "react";
 import styles from "./styles.less";
-import {Input} from "element-react";
 import {randCode} from "@/common/assect/util";
 
 interface IProps {
@@ -15,10 +14,10 @@ const Verification = (props: IProps) => {
   const array = [...new Array(props.amount ? props.amount : 4)];
   const [value, set_value] = React.useState<[...any]>(array);
   const [focus, set_focus] = React.useState<number>(props.value ? props.value.length : 0);
-  const onChange = (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined, index: number) => {
-    if (e) {
+  const onChange = (e: any, index: number) => {
+    if (e.target.value) {
       const v = [...value];
-      v[index] = (e as any).replace(value[index], "");
+      v[index] = (e.target.value as string).replace(value[index], "");
       props.onChange && props.onChange((v.filter(i => i)).join(""));
       onChangeFocus(index, true, v);
     }
@@ -27,7 +26,7 @@ const Verification = (props: IProps) => {
   const onChangeFocus = (index: number, type: boolean, value: any) => {
     const i = type ? index + 1 : index - 1;
     const target = ((div.current as HTMLDivElement).getElementsByClassName(props.id))[i];
-    const nowInput = target ? target.children[0] : ((div.current as HTMLDivElement).getElementsByClassName(props.id))[index].children[0];
+    const nowInput = target ? target : ((div.current as HTMLDivElement).getElementsByClassName(props.id))[index];
     const nowFocus = target ? i : index;
     const emptyValue = value.map((a: any, x: number) => x === nowFocus ? undefined : a);
     set_value(emptyValue);
@@ -75,12 +74,12 @@ const Verification = (props: IProps) => {
 
   return <div className={styles.verification} ref={div} id={props.id} onKeyDown={onkeydown}>
     {value.map((i, index) => {
-      return <Input
+      return <input
         autoFocus={focus === index}
-        value={value[index]}
-        max={1}
+        value={value[index] ? value[index] : ""}
+        maxLength={2}
         key={index}
-        className={`${props.id} ${styles.input} ${focus === index ? styles.input_f : "no_input_f"}`}
+        className={`${props.id} ${styles.input}`}
         onChange={(e) => onChange(e, index)}
         onFocus={(e) => onFocus(e, index)}
       />;
