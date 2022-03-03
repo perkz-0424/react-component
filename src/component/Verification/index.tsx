@@ -16,25 +16,29 @@ const Verification = (props: IProps) => {
   const [value, set_value] = React.useState<[...any]>(array);
   const [focus, set_focus] = React.useState<number>(props.value ? props.value.length : 0);
   const onChange = (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined, index: number) => {
+    console.log(e, value[index])
     if (e) {
       const last = `${e}`.length - 1;
       const lastValue = `${e}`[last];
       const v = [...value];
       v[index] = lastValue;
       props.onChange && props.onChange((v.filter(i => i)).join(""));
-      onChangeFocus(index, true);
-      set_value(v);
+      onChangeFocus(index, true, v);
     }
   };
 
-  const onChangeFocus = (index: number, type?: boolean) => {
+  const onChangeFocus = (index: number, type: boolean, value: any) => {
     const i = type ? index + 1 : index - 1;
     const target = ((div.current as HTMLDivElement).getElementsByClassName(props.id))[i];
-    if (target) {
-      set_focus(i);
-      const input = target.children[0];
-      (input as HTMLInputElement).focus();
-    }
+    const nowInput = target ? target.children[0] : ((div.current as HTMLDivElement).getElementsByClassName(props.id))[index].children[0];
+    const nowFocus = target ? i : index;
+    const emptyValue = value.map((a: any, x: number) => x === nowFocus ? undefined : a);
+    set_value(emptyValue);
+    setTimeout(() => {
+      set_value(value);
+      set_focus(nowFocus);
+      (nowInput as HTMLInputElement).focus();
+    }, 0);
   };
 
   const deleteValue = () => {
@@ -44,8 +48,7 @@ const Verification = (props: IProps) => {
       v[i] = v[i + 1];
     }
     props.onChange && props.onChange((v.filter(i => i)).join(""));
-    set_value(v);
-    onChangeFocus(focus);
+    onChangeFocus(focus, false, v);
   };
   const onFocus = (e: React.SyntheticEvent<HTMLInputElement, Event> | undefined, index: number) => {
     set_focus(index);
@@ -56,9 +59,9 @@ const Verification = (props: IProps) => {
       case 8:
         return deleteValue();
       case 37:
-        return onChangeFocus(focus);
+        return onChangeFocus(focus, false, value);
       case 39:
-        return onChangeFocus(focus, true);
+        return onChangeFocus(focus, true, value);
 
     }
   };

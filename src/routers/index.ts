@@ -51,7 +51,7 @@ const routes = [
             path: "/verification",
             Component: require("@/pages/Pc/Verification").default,
             name: "验证码",
-            keywords: ["输入框"]
+            keywords: ["输入框", "input"]
           },
         ]
       },
