@@ -43,6 +43,12 @@ const routes = [
             keywords: ["图片"]
           },
           {
+            path: "/qrcode",
+            Component: require("@/pages/Pc/ImageQRCode").default,
+            name: "二维码",
+            keywords: ["图片", "二维码"]
+          },
+          {
             path: "/number",
             Component: require("@/pages/Pc/Number").default,
             name: "动态数字",

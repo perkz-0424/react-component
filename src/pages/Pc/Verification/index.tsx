@@ -10,6 +10,8 @@ const Verification = () => {
     <VerificationComponent amount={4} value={"zyhf"}/>
     <br/>
     <TimeMeter/>
+    <br/>
+    <TimeMeter/>
   </div>;
 };
 
