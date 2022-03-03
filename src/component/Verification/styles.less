@@ -10,12 +10,13 @@
 }
 
 .verification {
-  display: flex;
-  flex-wrap: nowrap;
+  display: inline-block;
   padding: 5px;
   box-sizing: border-box;
 
   .input {
+    float: left;
+    white-space: nowrap;
     width: 35px;
     margin-right: 5px;
     line-height: 35px;
@@ -23,7 +24,7 @@
     font-size: 16px;
     color: #747d84;
     caret-color: transparent;
-    border: 1.3px solid #bfcbd9;
+    border: 1px solid #bfcbd9;
     outline: none;
     height: 35px;
     border-radius: 3px;
@@ -35,7 +36,7 @@
     }
 
     &:hover {
-      border-color: #b0bac7
+      border-color: #6e91c4
     }
   }
 }
