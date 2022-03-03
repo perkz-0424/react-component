@@ -27,7 +27,7 @@ const Img = (props: IProps): React.ReactElement => {
       }
     };
     xhr.send();
-    return () => xhr.abort()
+    return () => xhr.abort();
   }, [props.src]);
   return <div className={`${styles.box} ${props.className ? props.className : ""}`}>
     <img src={src} alt={props.alt} className={styles.img}/>

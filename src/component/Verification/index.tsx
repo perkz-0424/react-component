@@ -30,10 +30,11 @@ const Verification = (props: IProps) => {
     const nowFocus = target ? i : index;
     const emptyValue = value.map((a: any, x: number) => x === nowFocus ? undefined : a);
     set_value(emptyValue);
-    setTimeout(() => {
+    const t = setTimeout(() => {
       set_value(value);
       set_focus(nowFocus);
       (nowInput as HTMLInputElement).focus();
+      clearTimeout(t);
     }, 0);
   };
 

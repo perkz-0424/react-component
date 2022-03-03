@@ -6,7 +6,7 @@ const Verification = () => {
   return <div className={styles.verification}>
     <VerificationComponent amount={6} value={"125"}/>
 
-    <VerificationComponent amount={6} value={"zyhf"}/>
+    <VerificationComponent amount={4} value={"zyhf"}/>
   </div>;
 };
 

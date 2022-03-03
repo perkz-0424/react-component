@@ -43,6 +43,26 @@ export function getBase64(file: any) {
   });
 }
 
+export function getImageBase64(src: string) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.crossOrigin = "*";
+    image.src = src;
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const ctx = canvas.getContext("2d");
+      (ctx as CanvasRenderingContext2D).drawImage(image, 0, 0, image.width, image.height);
+      const dataURL = canvas.toDataURL("image/png");
+      canvas.remove();
+      image.remove();
+      return resolve(dataURL);
+    };
+    image.onerror = (error) => reject(error);
+  });
+}
+
 export function getBinary(file: any) {
   return new Promise((resolve, reject) => {
     getBase64(file)
