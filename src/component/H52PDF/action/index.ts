@@ -47,7 +47,7 @@ export const outputImage = async (target: HTMLElement | string) => {
 };
 
 //压缩图片
-export const compress = (base64: string, rate = 1.2) => {
+export const compress = (base64: string, rate = 1.2, maxsize?: number) => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = base64;
@@ -60,8 +60,8 @@ export const compress = (base64: string, rate = 1.2) => {
       (canvas.getContext("2d") as CanvasRenderingContext2D).drawImage(img, 0, 0, w, h);
       const b64 = canvas.toDataURL("image/jpeg");
       canvas.toBlob(async (blob: any) => {
-        if (blob.size > 1000500000) {
-          const a: any = await compress(b64, rate);
+        if (blob.size > (maxsize ? maxsize : 1000500000)) {
+          const a: any = await compress(b64, rate, maxsize);
           resolve({...a});
         } else {
           canvas.remove();
