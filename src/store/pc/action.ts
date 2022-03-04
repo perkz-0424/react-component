@@ -1,6 +1,7 @@
 import {Dispatch} from "@/definitions/type";
 import {namespace as pc, State} from "@/store/pc";
 import {getObjValue} from "@/common/assect/util";
+import {MapRoute} from "@/definitions/router";
 
 const action = {
   mapState(state: { [pc]: State }) {
@@ -8,7 +9,7 @@ const action = {
       ...state[pc],
     };
   },
-  mapDispatch(dispatch: Dispatch, params: any) {
+  mapDispatch(dispatch: Dispatch, params: MapRoute) {
     return {
       init() {
         dispatch({type: `${pc}/init`});

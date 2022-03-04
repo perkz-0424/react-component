@@ -13,16 +13,8 @@ import createStores from "@/store/models";
 import {Provider} from "react-redux";
 import Auth from "@/auth";
 import {getSearchToParams} from "@/common/assect/util";
-
-class RouteOptions {
-  path!: string;
-  Component!: (props: any) => React.ReactElement;
-  realPath?: string;
-  children?: RouteOptions[];
-  stores?: any[];
-  params?: string[];
-  redirect?: string;
-}
+import {RouteOptions} from "@/definitions/router";
+import {StoreStores, StoreState} from "@/definitions/store";
 
 const getPath = (item: RouteOptions) => {
   const {path, params} = item;
@@ -44,15 +36,15 @@ const getNewRouters = (array: Array<RouteOptions>): Array<RouteOptions> => {
   });
 };
 
-const getStore = (stores: any) => {
-  const items: any = {};
+const getStore = (stores: StoreState[]) => {
+  const items: StoreStores = {};
   stores.forEach((item: any) => {
     items[item.namespace] = item;
   });
   return createStores({...items});
 };
 
-const renderRoutes = (o_o: Array<RouteOptions>, routers: any) => {
+const renderRoutes = (o_o: Array<RouteOptions>, routers: Array<RouteOptions>) => {
   const search = window.location.search;
   return <Routes>
     {o_o.map(
@@ -91,7 +83,7 @@ const renderRoutes = (o_o: Array<RouteOptions>, routers: any) => {
   </Routes>;
 };
 
-const CreateRouter = (props: any) => {
+const CreateRouter = (props: { routers: Array<RouteOptions> }) => {
   return (
     <React.Fragment>
       <BrowserRouter>
