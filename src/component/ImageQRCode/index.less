@@ -6,9 +6,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 0 10px 1px #999999;
+
 }
 
 .img {
@@ -36,7 +34,18 @@
 }
 
 .qr {
-  height: 100%;
-  width: 100%;
-  display: none;
+  height: 100% !important;
+  width: 100% !important;
+  pointer-events: all;
+  position: absolute;
+  z-index: 1;
+}
+
+.line {
+  display: inline-block;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 1px #999999;
+  padding: 10px!important;
+  box-sizing: border-box;
 }
