@@ -1,8 +1,8 @@
 import {Dispatch} from "@/definitions/type";
-import {namespace as pc} from "@/store/pc";
+import {namespace as pc, State} from "@/store/pc";
 
 const action = {
-  mapState(state: any) {
+  mapState(state: { [pc]: State }) {
     return {
       ...state[pc],
     };

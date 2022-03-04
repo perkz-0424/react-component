@@ -1,12 +1,13 @@
-import {StateMain} from "@/definitions/type";
-
 export const namespace = "main";
+
+export class State {
+}
 
 const store = {
   namespace,
   state: {},
   reducers: {
-    init(state: StateMain) {
+    init(state: State) {
       return {
         ...state,
       };

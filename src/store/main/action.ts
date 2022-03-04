@@ -1,5 +1,5 @@
-import {StateMain as State, Dispatch} from "@/definitions/type";
-import {namespace as main} from "@/store/main";
+import {Dispatch} from "@/definitions/type";
+import {namespace as main, State} from "@/store/main";
 
 const action = {
   mapState(state: { [main]: State }) {

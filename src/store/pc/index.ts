@@ -1,9 +1,13 @@
 export const namespace = "pc";
+
+export class State {
+}
+
 const store = {
   namespace,
   state: {},
   reducers: {
-    init(state: any) {
+    init(state: State) {
       return {...state};
     },
   }

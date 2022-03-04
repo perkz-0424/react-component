@@ -1,6 +1,10 @@
-export default require("@/store/models").default({
-  main: require("@/store/main").default,
-  pc: require("@/store/pc").default,
-  mobile: require("@/store/mobile").default,
-  image: require("@/store/image").default,
+import createStores from "@/store/models";
+import main from "@/store/main";
+import pc from "@/store/pc";
+import mobile from "@/store/mobile";
+import image from "@/store/image";
+
+const globalStore = createStores({
+  main, pc, mobile, image
 });
+export default globalStore;

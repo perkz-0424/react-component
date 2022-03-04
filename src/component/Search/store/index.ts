@@ -1,6 +1,8 @@
+import createStores from "@/store/models";
+
 export const namespace = "search";
 
-export default require("@/store/models").default({
+export default createStores({
   [namespace]: {
     namespace,
     state: {

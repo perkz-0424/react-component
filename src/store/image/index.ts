@@ -1,6 +1,15 @@
 export const namespace = "image";
 const icon = require("@/common/images/mxxz.jpg");
 
+export class State {
+  public fileList?: {
+    uid: string;
+    name: string;
+    status: string;
+    url: any;
+  }[];
+}
+
 const store = {
   namespace,
   state: {
@@ -14,7 +23,8 @@ const store = {
     ]
   },
   reducers: {
-    setFileList(state: any, {fileList}: { fileList: any[] }) {
+    setFileList(state: any, {fileList}: State) {
+      console.log(state)
       return {...state, fileList};
     },
   }

@@ -1,18 +1,18 @@
 import {Dispatch} from "@/definitions/type";
-import {namespace as mobile} from "@/store/mobile";
+import {namespace as mobile, State} from "@/store/mobile";
 
 const action = {
-  mapState(state: any) {
+  mapState(state: { [mobile]: State }) {
     return {
       ...state[mobile],
     };
   },
   mapDispatch(dispatch: Dispatch) {
-    return{
+    return {
       init() {
         dispatch({type: `${mobile}/init`});
       },
-    }
+    };
   }
 };
 

@@ -1,38 +1,40 @@
-import {createStore, combineReducers, applyMiddleware} from "redux";
+import {createStore, combineReducers, applyMiddleware, Store} from "redux";
 import thunk from "redux-thunk";
+import {StoreStores, StoreReducers, StoreMap, StoreState} from "@/definitions/store";
 
 // 创建数据源
-const createState = (map: any) => {
+const createState = <T>(map: StoreMap): StoreReducers => {
   const newMap = {...map};
-  const newReducers: any = {};
+  const newReducers: StoreReducers = {};
   Object.entries(newMap.reducers).forEach((item) => {
     newReducers[`${newMap["namespace"]}/${item[0]}`] = item[1];
   });
-  newReducers[`${newMap["namespace"]}/setState`] = (_state: any, {state}: any) => {
+  newReducers[`${newMap["namespace"]}/setState`] = (_state: StoreState, {state}: { state: StoreState }) => {
     return {..._state, ...state};
   };
   newMap.reducers = newReducers;
-  return (state = newMap.state, action: any) => {
+  return (state = newMap.state, action: { type: string }) => {
     if (newMap.reducers[action.type]) {
       return newMap.reducers[action.type](state, action);
     } else {
       return state;
     }
-  }
-}
+  };
+};
+
 // namespace区分各个数据源
-const createReducers = (reducers: any) => {
-  const newReducers: any = {};
+const createReducers = (reducers: StoreStores): StoreReducers => {
+  const newReducers: StoreReducers = {};
   Object.keys(reducers).forEach((key) => {
-    newReducers[reducers[key]["namespace"]] = createState(reducers[key])
+    newReducers[reducers[key]["namespace"]] = createState(reducers[key]);
   });
-  return newReducers
-}
+  return newReducers;
+};
 
 // 创建数据仓库
-const createStores = (stores: any) => {
+const createStores = (stores: StoreStores): Store => {
   return createStore(combineReducers(createReducers({
     ...stores
   })), applyMiddleware(thunk));
-}
+};
 export default createStores;
