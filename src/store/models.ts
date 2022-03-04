@@ -1,5 +1,5 @@
-import {createStore, combineReducers, applyMiddleware, Store} from "redux";
 import thunk from "redux-thunk";
+import {createStore, combineReducers, applyMiddleware, Store} from "redux";
 import {StoreStores, StoreReducers, StoreMap, StoreState} from "@/definitions/store";
 
 // 创建数据源

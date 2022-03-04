@@ -1,16 +1,15 @@
+import {StoreState} from "@/definitions/store";
+
 export const namespace = "main";
 
-export class State {
-}
+export type State = {}
 
 const store = {
   namespace,
-  state: {},
+  state: {} as State,
   reducers: {
-    init(state: State) {
-      return {
-        ...state,
-      };
+    init(state: StoreState, params: State) {
+      return {...state};
     },
   }
 };
