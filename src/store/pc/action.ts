@@ -1,5 +1,6 @@
 import {Dispatch} from "@/definitions/type";
 import {namespace as pc, State} from "@/store/pc";
+import {getObjValue} from "@/common/assect/util";
 
 const action = {
   mapState(state: { [pc]: State }) {
@@ -13,12 +14,8 @@ const action = {
         dispatch({type: `${pc}/init`});
       },
       getSearchData() {
-        const array = params["routerHistory"]["routers"][0]
-        && params["routerHistory"]["routers"][0]["children"]
-        && params["routerHistory"]["routers"][0]["children"][0]
-        && params["routerHistory"]["routers"][0]["children"][0]["children"]
-          ? params["routerHistory"]["routers"][0]["children"][0]["children"] : [];
-        return array.map((e: any) => ({
+        const array = getObjValue(params, ".routerHistory.routers.0.children.0.children");
+        return (array ? array : []).map((e: any) => ({
           name: e.name,
           enName: e.path.replace("/", ""),
           path: e.path.toLowerCase().replace("/", ""),

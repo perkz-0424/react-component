@@ -1,5 +1,6 @@
 import {success} from "@/common/assect/message";
 
+//{a:1} => 'a=1'
 export const getParamsToSearch = (params: any) => {
   let search = "";
   for (const p in params) {
@@ -11,6 +12,7 @@ export const getParamsToSearch = (params: any) => {
   return search;
 };
 
+//'a=1' => {a:1}
 export const getSearchToParams = (search?: string) => {
   const params: any = {};
   if (search) {
@@ -23,6 +25,7 @@ export const getSearchToParams = (search?: string) => {
   return params;
 };
 
+
 export const arrayObjReduce = (arr: any[]) => {
   const obj: any = {};
   arr = arr.reduce(function (item, next) {
@@ -34,6 +37,7 @@ export const arrayObjReduce = (arr: any[]) => {
   return arr;
 };
 
+// 获取文件base64
 export function getBase64(file: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -43,6 +47,7 @@ export function getBase64(file: any) {
   });
 }
 
+// 获取图片base64
 export function getImageBase64(src: string) {
   return new Promise((resolve, reject) => {
     const image = new Image();
@@ -85,6 +90,7 @@ export const sleep = (time: number) => new Promise((resolve) => {
   setTimeout(resolve, time);
 });
 
+// copy
 export const copyText = (value: string) => {
   const oInput = document.createElement("input");
   oInput.value = value;
@@ -106,6 +112,7 @@ export const randAChar = () => {
   }
 };
 
+// 随机一个字符串
 export const randCode = (n = Math.random() * 5) => {
   let s = "";
   for (let i = 0; i < n; i++) {
@@ -120,4 +127,23 @@ export const randCode = (n = Math.random() * 5) => {
       .replace(/0/g, "h"))
       .replace("9", "f") +
     randAChar();
+};
+
+// 获取对象的值
+export const getObjValue = (obj: { [key: string]: any }, keys: string) => {
+  let value: any = obj;
+  const keyArray = (keys.split(".")).filter(i => i);
+  if (keyArray.length) {
+    for (let i = 0; i < keyArray.length; i++) {
+      if (value && value[keyArray[i]]) {
+        value = value[keyArray[i]];
+      } else {
+        value = undefined;
+        return undefined;
+      }
+    }
+  } else {
+    return value;
+  }
+  return value;
 };
