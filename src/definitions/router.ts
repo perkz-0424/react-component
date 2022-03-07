@@ -19,7 +19,7 @@ export type RouterHistory = {
     state: { [key: string]: any } | null | string;
     [key: string]: any
   },
-  navigate: (to: string, options: { [key: string]: any }) => any
+  navigate: (to: string) => any
   params: {
     [key: string]: string;
   };
@@ -27,7 +27,6 @@ export type RouterHistory = {
   searchParams: {
     [key: string]: string;
   };
-  useRoutes: () => any;
 }
 export type MapRoute = {
   path: string;

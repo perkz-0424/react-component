@@ -6,11 +6,10 @@ import {
   useNavigate,
   useLocation,
   useParams,
-  useRoutes,
   Navigate,
 } from "react-router-dom";
 import createStores from "@/store/models";
-import {Provider} from "react-redux";
+import {Provider, connect} from "react-redux";
 import Auth from "@/auth";
 import {getSearchToParams} from "@/common/assect/util";
 import {RouteOptions} from "@/definitions/router";
@@ -44,23 +43,23 @@ const getStore = (stores: StoreState[]) => {
   return createStores({...items});
 };
 
-const renderRoutes = (o_o: Array<RouteOptions>, routers: Array<RouteOptions>) => {
+const renderRoutes = (o_o: Array<RouteOptions>, routers: Array<RouteOptions>, params?: StoreState) => {
   const search = window.location.search;
   return <Routes>
     {o_o.map(
       ({Component, path, realPath, children, stores}) => {
-        const C = React.memo(Component);
+        const C = React.memo(connect((globalStoreState) => ({globalStoreState}))(Component));
         const A = Auth(() => <C
           routerHistory={{
             navigate: useNavigate(),
             location: useLocation(),
             params: useParams(),
-            useRoutes: useRoutes,
             searchParams: getSearchToParams(useLocation().search),
             routers,
           }}
-          childrenRouter={children ? () => renderRoutes(children, routers) : null}
+          childrenRouter={children ? (params?: StoreState) => renderRoutes(children, routers, params) : () => <></>}
           path={realPath}
+          routerParams={params}
         />);
         return <Route
           key={path}
