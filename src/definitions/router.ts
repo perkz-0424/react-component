@@ -19,7 +19,7 @@ export type RouterHistory = {
     state: { [key: string]: any } | null | string;
     [key: string]: any
   },
-  navigate: (to: string) => any
+  navigate: (to: string, options?: { [key: string]: any }) => any
   params: {
     [key: string]: string;
   };
