@@ -13,6 +13,7 @@ const ImageQRCode = (props: {
   const {value, logo, isImage} = props;
   const [imgSrc, setImgSrc] = useState("");
   useEffect(() => {
+    setImgSrc("");
     H52PDF.outputImage(id).then(setImgSrc);
   }, [value, logo, isImage]);
   return (
