@@ -11,7 +11,7 @@ interface IProps {
 }
 
 const Img = (props: IProps): React.ReactElement => {
-  const [src, set_src] = React.useState(props.src);
+  const [src, set_src] = React.useState("");
 
   React.useEffect(() => {
     getImageBase64(props.src).then((a) => {
@@ -21,7 +21,7 @@ const Img = (props: IProps): React.ReactElement => {
     });
   }, [props.src]);
   return <div className={`${styles.box} ${props.className ? props.className : ""}`}>
-    <img src={src} alt={props.alt} className={styles.img}/>
+    {src ? <img src={src} alt={props.alt} className={styles.img}/> : <></>}
   </div>;
 };
 
